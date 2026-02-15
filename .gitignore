@@ -11,3 +11,6 @@ export_presets.cfg
 # Mono-specific
 .mono/
 data_*/
+
+# web build dir
+web_build/
