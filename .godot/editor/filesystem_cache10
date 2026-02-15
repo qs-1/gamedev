@@ -1,0 +1,16 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1771125857
+export_presets.cfg::TextFile::-1::1771125857::0::1::::<><><>0<>0<><>::
+::res://assets/::1771123283
+coin.png::CompressedTexture2D::2402568063008994270::1771123283::1771123283::1::::<><><>0<>0<>02f996faf0f669c4e513ab4baf663bc3<>res://.godot/imported/coin.png-f04b9cd408b88aba3ab0966b4da32df0.ctex::
+icon.svg::CompressedTexture2D::5315792862006088745::1771123283::1771123283::1::::<><><>0<>0<>8c43e4eea7d114a6602be66bd2592398<>res://.godot/imported/icon.svg-56083ea2a1f1a4f1e49773bdc6d7826c.ctex::
+::res://build/::1771125857
+index.apple-touch-icon.png::CompressedTexture2D::5592997342080672547::1771125857::1771125861::1::::<><><>0<>0<>e7c37743a7bdd4eef91c754bf338ee9b<>res://.godot/imported/index.apple-touch-icon.png-dcd2c094bfa3f769157f6f2ba930cc56.ctex::
+index.icon.png::CompressedTexture2D::6536183886818032994::1771125857::1771125861::1::::<><><>0<>0<>fee6e679fd4516a61cf2641e50f722c1<>res://.godot/imported/index.icon.png-96098a584bb713a61c1e8aa1df56a1bb.ctex::
+index.png::CompressedTexture2D::5019340055452273934::1771125857::1771125861::1::::<><><>0<>0<>a27f148d0d07329c686764b31b7717d5<>res://.godot/imported/index.png-659c11691fe5279cf81f33eb936290a4.ctex::
+::res://scenes/::1771123435
+coin.tscn::PackedScene::6070741966378894488::1771123435::0::1::::<><><>0<>0<><>::res://scripts/coin.gd<>uid://bah27enol41c1::::res://assets/coin.png
+game.tscn::PackedScene::8892977817115440855::1771123283::0::1::::<><><>0<>0<><>::uid://1d1ckkjmxn08::::res://scripts/node_2d.gd<>uid://ch0aljsxfwrd6::::res://assets/icon.svg<>uid://cxx2pd0aatp8t::::res://scenes/coin.tscn
+::res://scripts/::1771123435
+coin.gd::GDScript::1989075399649122039::1771123283::0::1::::<>Area2D<><>0<>0<><>::
+node_2d.gd::GDScript::1832685822358179519::1771123435::0::1::::<>Node2D<><>0<>0<><>::
