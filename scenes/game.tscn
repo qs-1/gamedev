@@ -1,13 +1,30 @@
 [gd_scene format=3 uid="uid://dyx3bspek4fhn"]
 
 [ext_resource type="Script" uid="uid://1d1ckkjmxn08" path="res://scripts/node_2d.gd" id="1_yqjtg"]
-[ext_resource type="Texture2D" uid="uid://ch0aljsxfwrd6" path="res://icon.svg" id="2_lnu2h"]
+[ext_resource type="Texture2D" uid="uid://ch0aljsxfwrd6" path="res://assets/icon.svg" id="2_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://cxx2pd0aatp8t" path="res://scenes/coin.tscn" id="3_lnu2h"]
 
-[node name="Node2D" type="Node2D" unique_id=1438889881]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqjtg"]
+size = Vector2(117, 118)
 
-[node name="Node2D" type="Node2D" parent="." unique_id=1383245524]
+[node name="game" type="Node2D" unique_id=1438889881]
+
+[node name="player" type="Node2D" parent="." unique_id=1383245524]
+z_index = 1
 position = Vector2(500, 500)
 script = ExtResource("1_yqjtg")
 
-[node name="Sprite2D" type="Sprite2D" parent="Node2D" unique_id=892656181]
+[node name="Sprite2D" type="Sprite2D" parent="player" unique_id=892656181]
 texture = ExtResource("2_lnu2h")
+
+[node name="hitbox" type="Area2D" parent="player" unique_id=1134807390]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player/hitbox" unique_id=677270756]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_yqjtg")
+
+[node name="coin" parent="." unique_id=1119455589 instance=ExtResource("3_lnu2h")]
+position = Vector2(187, 356)
+
+[node name="coin2" parent="." unique_id=1171913652 instance=ExtResource("3_lnu2h")]
+position = Vector2(896, 389)

@@ -24,8 +24,8 @@ func _process(delta: float) -> void:
 		
 	if direction.length() > 0:
 		# # rotation
-		var target_angle = direction.angle()
-		rotation = lerp_angle(rotation, target_angle, 5.0 * delta)
+		#var target_angle = direction.angle()
+		#rotation = lerp_angle(rotation, target_angle, 5.0 * delta)
 		direction = direction.normalized()
 	
 	var temp_speed = speed
