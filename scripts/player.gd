@@ -1,15 +1,11 @@
 extends Node2D
 
 
-func _ready() -> void:
-	pass
-
-
 var speed = 300.0
 var timer = 0
 @onready var sprite_w_half = $Sprite2D.texture.get_width() / 2
 @onready var sprite_h_half = $Sprite2D.texture.get_height() / 2
-	
+
 
 func _process(delta: float) -> void:
 	var direction = Vector2.ZERO
@@ -23,9 +19,6 @@ func _process(delta: float) -> void:
 		direction.y -= 1 
 		
 	if direction.length() > 0:
-		# # rotation
-		#var target_angle = direction.angle()
-		#rotation = lerp_angle(rotation, target_angle, 5.0 * delta)
 		direction = direction.normalized()
 	
 	var temp_speed = speed
@@ -33,24 +26,6 @@ func _process(delta: float) -> void:
 		temp_speed *= 2
 		
 	position += direction * temp_speed * delta
-
-#
-	# # mouse follower
-	#var mouse = get_viewport().get_mouse_position()
-	#var direction = mouse - position
-	#
-	#if direction.length() > 5:
-		## #rotation
-		##var target_angle = direction.angle()
-		##rotation = lerp_angle(rotation, target_angle, 5.0 * delta)
-		#
-		#direction = direction.normalized()
-		#
-		#var temp_speed = speed
-		#if Input.is_action_pressed("sprint"):
-			#temp_speed *= 2
-		#
-		#position += direction * temp_speed * delta
 
 
 	# # wrapping
@@ -70,10 +45,3 @@ func _process(delta: float) -> void:
 	#var screen_size = get_viewport_rect().size
 	#position.x = clamp(position.x, sprite_w_half, screen_size.x - sprite_w_half)
 	#position.y = clamp(position.y, sprite_h_half, screen_size.y - sprite_h_half)
-
-
-	# # timer
-	#timer += delta
-	#if timer>=2:
-			#print("hello")
-			#timer = 0	

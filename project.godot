@@ -15,6 +15,10 @@ run/main_scene="uid://dyx3bspek4fhn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://assets/icon.svg"
 
+[autoload]
+
+GameManager="*uid://cvt2kqp81jbvr"
+
 [dotnet]
 
 project/assembly_name="demo"
