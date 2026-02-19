@@ -3,9 +3,8 @@ extends Node2D
 
 var speed = 300.0
 var timer = 0
-@onready var sprite_w_half = $Sprite2D.texture.get_width() / 2
-@onready var sprite_h_half = $Sprite2D.texture.get_height() / 2
-
+@onready var sprite_w_half = $Sprite2D.texture.get_width() * $Sprite2D.scale.x / 2
+@onready var sprite_h_half = $Sprite2D.texture.get_height() * $Sprite2D.scale.y / 2
 
 func _process(delta: float) -> void:
 	var direction = Vector2.ZERO
