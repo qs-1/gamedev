@@ -89,16 +89,3 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	var other = area.get_parent() 
 	var reflect_vector = (position - other.position).normalized() 
 	direction = direction.bounce(reflect_vector)
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
