@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bv8yqajh0n5sh"]
+
+[ext_resource type="Script" uid="uid://ckk0pii7pv8du" path="res://scripts/game.gd" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://dcp04k21kkbkx" path="res://scenes/basket.tscn" id="2_lnu2h"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lbhrr"]
+font_size = 22
+
+[node name="Game" type="Node2D" unique_id=1635743928]
+script = ExtResource("1_yqjtg")
+
+[node name="basket" parent="." unique_id=1878568089 instance=ExtResource("2_lnu2h")]
+position = Vector2(580, 600)
+
+[node name="Timer" type="Timer" parent="." unique_id=1366578343]
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=1428301610]
+offset_right = 83.0
+offset_bottom = 31.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_lbhrr")

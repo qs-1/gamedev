@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://d082gcnbpggya"]
+
+[ext_resource type="Texture2D" uid="uid://bm08nj0l6xkxk" path="res://assets/fruit.png" id="1_lfepc"]
+[ext_resource type="Script" uid="uid://b07xasvwvek7v" path="res://scripts/fruit.gd" id="1_yvtr8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yvtr8"]
+radius = 34.132095
+
+[node name="fruit" type="Area2D" unique_id=1114660885]
+script = ExtResource("1_yvtr8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=583399855]
+texture = ExtResource("1_lfepc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=891771461]
+position = Vector2(6, 3)
+shape = SubResource("CircleShape2D_yvtr8")

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dcp04k21kkbkx"]
+
+[ext_resource type="Script" uid="uid://dilqcjq4hetf1" path="res://scripts/basket.gd" id="1_ervdt"]
+[ext_resource type="Texture2D" uid="uid://cthl8xccj0p5j" path="res://assets/basket.png" id="1_w88dh"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nxwya"]
+radius = 36.0
+height = 106.0
+
+[node name="basket" type="Area2D" unique_id=1878568089]
+script = ExtResource("1_ervdt")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=785925240]
+texture = ExtResource("1_w88dh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1396017864]
+position = Vector2(0, -1)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_nxwya")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
