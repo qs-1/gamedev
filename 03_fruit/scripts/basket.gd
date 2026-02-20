@@ -3,7 +3,6 @@ extends Area2D
 var speed = 400
 
 func _process(delta):
-	# 1. Movement
 	if Input.is_action_pressed("ui_left"):
 		position.x -= speed * delta
 	if Input.is_action_pressed("ui_right"):

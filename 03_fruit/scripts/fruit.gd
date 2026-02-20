@@ -12,4 +12,5 @@ func _process(delta):
 	position.y += speed * delta
 	
 	if position.y > get_viewport_rect().size.y + 100:
+		get_parent().take_damage()
 		queue_free()
