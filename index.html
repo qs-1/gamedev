@@ -1,18 +1,119 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Game Dev Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; background: #222; color: #eee; }
-        a { display: block; margin: 20px; color: #4db8ff; font-size: 1.5rem; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        :root {
+            --bg-color: #1e1e1e;
+            --text-color: #d4d4d4;
+            --accent-color: #4db8ff;
+            --card-bg: #2d2d2d;
+            --hover-bg: #3c3c3c;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            border-bottom: 1px solid #444;
+            padding-bottom: 1rem;
+        }
+
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .project-link {
+            display: block;
+            background: var(--card-bg);
+            color: var(--accent-color);
+            padding: 15px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .project-link:hover {
+            background: var(--hover-bg);
+            border-color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        .project-link span {
+            color: #888;
+            margin-right: 10px;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        .repo-link {
+            color: #9cdcfe;
+            text-decoration: none;
+            border-bottom: 1px dashed #555;
+        }
+
+        .repo-link:hover {
+            border-bottom-style: solid;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
-    <h1>CS 470 Game Development Portfolio</h1>
-    <hr>
-    <a href="wanderer/index.html">🎮 Play Assignment 1: Wanderer</a>
-    <a href="ricochet/index.html">🎱 Play Assignment 2: Ricochet</a>
-    <a href="fruit/index.html">🍎 Play Assignment 3: Fruit Frenzy</a>
+
+    <div class="container">
+        <h1>CS 470 Game Development Portfolio</h1>
+
+        <div class="project-list">
+            <a class="project-link" href="wanderer/index.html">
+                <span>01.</span>Assignment 1: Wanderer
+            </a>
+            <a class="project-link" href="ricochet/index.html">
+                <span>02.</span>Assignment 2: Ricochet
+            </a>
+            <a class="project-link" href="fruit/index.html">
+                <span>03.</span>Assignment 3: Fruit Frenzy
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>
+                View source on 
+                <a class="repo-link" href="https://github.com/qs-1/gamedev" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </div>
+
 </body>
 </html>
