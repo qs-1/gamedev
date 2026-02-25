@@ -15,5 +15,5 @@ func _process(delta):
 
 func _on_area_entered(area):
 	if area.is_in_group("fruits"):
-		area.queue_free()
-		get_parent().add_score()
+		get_parent().add_score(area.score) # add score of this fruit
+	area.queue_free()
