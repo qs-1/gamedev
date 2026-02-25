@@ -15,6 +15,11 @@ run/main_scene="uid://bv8yqajh0n5sh"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://assets/icon.svg"
 
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
 [dotnet]
 
 project/assembly_name="fruit_frenzy"
