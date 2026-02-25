@@ -10,7 +10,11 @@ func _process(delta: float) -> void:
 	var screen = get_viewport_rect().size
 	var sprite_w = $Sprite2D.get_rect().size.x * $Sprite2D.scale.x
 	var sprite_h = $Sprite2D.get_rect().size.y * $Sprite2D.scale.y
-	#direction.y += 0.8 * delta
+	
+	#gravity
+	if direction.y < 3:
+		direction.y += 0.8 * delta
+	
 	position += direction * SPEED * delta
 	
 	var wrapped = false
@@ -76,10 +80,10 @@ func make_trail():
 	trail.modulate.a = 0.5
 	
 	get_parent().add_child(trail)
-	#get_parent().move_child(trail, 0)
 	
 	var tween = create_tween()
 	tween.tween_property(trail, "modulate:a", 0 , 0.5)
+	#tween.parallel().tween_property(trail, "scale", Vector2.ZERO, 0.5)
 	
 	tween.tween_callback(trail.queue_free)
 	
@@ -87,5 +91,8 @@ func make_trail():
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	var other = area.get_parent() 
-	var reflect_vector = (position - other.position).normalized() 
+	var reflect_vector = (other.position - position).normalized() 
 	direction = direction.bounce(reflect_vector)
+	
+	SPEED = min(SPEED * 1.1, 300) # speed increase on bounce
+	
