@@ -4,9 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://cylx503c0ncfh" path="res://assets/imgs/ball.png" id="2_f7cbr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4dx81"]
-size = Vector2(14, 14)
+size = Vector2(16, 14)
 
 [node name="Area2D" type="Area2D" unique_id=1020917625]
+z_index = 1
 script = ExtResource("1_cxlvu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1248495087]

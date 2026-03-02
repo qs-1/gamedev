@@ -43,13 +43,16 @@ label_settings = SubResource("LabelSettings_lnu2h")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Centerline" type="ColorRect" parent="UI" unique_id=965044825]
-z_index = -1
+[node name="BG" type="CanvasLayer" parent="." unique_id=1430482045]
+layer = -1
+
+[node name="Centerline" type="ColorRect" parent="BG" unique_id=965044825]
+z_index = -7
 offset_left = 575.0
 offset_top = -25.0
 offset_right = 577.0
 offset_bottom = 675.0
-color = Color(0.8352941, 0.8352941, 0.8352941, 0.27058825)
+color = Color(0.8352941, 0.8352941, 0.8352941, 0.3137255)
 
 [node name="hit" type="AudioStreamPlayer2D" parent="." unique_id=1925295077]
 stream = ExtResource("2_yqjtg")
