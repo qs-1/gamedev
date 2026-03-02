@@ -77,6 +77,9 @@ func game_won():
 		$UI/label_win.text = "Right Player Wins!\nPress Space to Restart"
 	$UI/label_win.visible = true
 	
+	$balls.stop() # stop spawning more
+	get_tree().call_group("ball", "queue_free") # delete onscreen
+	
 func _input(event):
 	if event.is_action_pressed("ui_accept") and $UI/label_win.visible:
 		get_tree().reload_current_scene()

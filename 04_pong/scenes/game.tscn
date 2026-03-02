@@ -64,7 +64,6 @@ stream = ExtResource("3_lnu2h")
 anchor_mode = 0
 
 [node name="balls" type="Timer" parent="." unique_id=1915071719]
-wait_time = 20.0
 autostart = true
 
 [connection signal="timeout" from="balls" to="." method="_on_balls_timeout"]

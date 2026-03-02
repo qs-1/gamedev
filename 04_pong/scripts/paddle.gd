@@ -13,20 +13,30 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var direction = Vector2.ZERO
 	
-	if not ball:
-		ball = get_tree().get_first_node_in_group("ball")
-	if is_ai and ball:
+	# make ai go for the nearest ball if there are multiple
+	var balls = get_tree().get_nodes_in_group("ball")
+	
+	var closest_ball = null
+	var closest_dist = INF
+
+	for b in balls:
+		var curr_dist = abs(position.x - b.position.x)
+		if curr_dist < closest_dist:
+			closest_dist = curr_dist
+			closest_ball = b
+
+	if is_ai and closest_ball:
 		var step = SPEED * delta
-		var distance = ball.position.y - position.y
+		var distance = closest_ball.position.y - position.y
 		
-		# if overshooting with speed, jus teleport to balls y pos
+		# if overshooting with speed, jus teleport to closest_balls y pos
 		if abs(distance) <= step: 
-			position.y = ball.position.y
+			position.y = closest_ball.position.y
 		else:
 			position.y += step * sign(distance)
 			
 		#or jus do
-		#position.y = move_toward(position.y, ball.position.y, SPEED * delta)
+		#position.y = move_toward(position.y, closest_ball.position.y, SPEED * delta)
 	
 	else:
 		if Input.is_action_pressed(UP):
