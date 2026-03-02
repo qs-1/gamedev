@@ -20,7 +20,7 @@ func _process(delta: float) -> void:
 	var closest_dist = INF
 
 	for b in balls:
-		var curr_dist = abs(position.x - b.position.x)
+		var curr_dist = abs(position.x - b.position.x)  
 		if curr_dist < closest_dist:
 			closest_dist = curr_dist
 			closest_ball = b

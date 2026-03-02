@@ -9,6 +9,9 @@ font_size = 34
 outline_size = 2
 outline_color = Color(0, 0, 0, 0.36078432)
 
+[sub_resource type="LabelSettings" id="LabelSettings_lbhrr"]
+font_size = 34
+
 [node name="game" type="Node2D" unique_id=1005205715]
 script = ExtResource("1_yqjtg")
 
@@ -26,6 +29,14 @@ offset_right = 10.0
 offset_bottom = 23.0
 text = "0"
 
+[node name="dim_overlay" type="ColorRect" parent="UI" unique_id=283321140]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5882353)
+
 [node name="label_win" type="Label" parent="UI" unique_id=1218242080]
 visible = false
 anchors_preset = 8
@@ -40,6 +51,23 @@ offset_bottom = -300.5
 grow_horizontal = 2
 grow_vertical = 2
 label_settings = SubResource("LabelSettings_lnu2h")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="label_start" type="Label" parent="UI" unique_id=539200795]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.5
+offset_top = -11.5
+offset_right = 76.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press Space to Start"
+label_settings = SubResource("LabelSettings_lbhrr")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -64,6 +92,6 @@ stream = ExtResource("3_lnu2h")
 anchor_mode = 0
 
 [node name="balls" type="Timer" parent="." unique_id=1915071719]
-autostart = true
+wait_time = 20.0
 
 [connection signal="timeout" from="balls" to="." method="_on_balls_timeout"]

@@ -3,6 +3,8 @@ extends Node2D
 var paddle_scene = preload("res://scenes/paddle.tscn")
 var ball_scene = preload("res://scenes/ball.tscn")
 
+var game_started = false
+
 var score_left = 0
 var score_right = 0
 
@@ -19,8 +21,9 @@ func _ready() -> void:
 	$UI/label_win.position.y = (screen.y / 2) - ($UI/label_win.size.y / 2)
 	$UI/label_win.position.x = (screen.x / 2) - ($UI/label_win.size.x / 2)
 	
+	$UI/dim_overlay.visible = true
+	$UI/label_start.visible = true
 	spawn_paddles()
-	spawn_ball()
 
 func spawn_paddles():
 	var left_paddle = paddle_scene.instantiate()
@@ -71,19 +74,39 @@ func _on_score(side):
 		spawn_ball()
 
 func game_won():
+	$UI/dim_overlay.visible = true
+	
 	if score_left > score_right:
 		$UI/label_win.text = "Left Player Wins!\nPress Space to Restart"
 	else:
 		$UI/label_win.text = "Right Player Wins!\nPress Space to Restart"
+		
 	$UI/label_win.visible = true
 	
 	$balls.stop() # stop spawning more
 	get_tree().call_group("ball", "queue_free") # delete onscreen
 	
 func _input(event):
-	if event.is_action_pressed("ui_accept") and $UI/label_win.visible:
-		get_tree().reload_current_scene()
+	if event.is_action_pressed("ui_accept"):
+		if not game_started:
+			start_game()
+		elif $UI/label_win.visible:
+			restart_game()
+		
+func start_game():
+	game_started = true
+	$UI/dim_overlay.visible = false
+	$UI/label_start.visible = false
+	$balls.start()
+	spawn_ball()
 
-
+func restart_game():
+	score_left = 0
+	score_right = 0
+	$UI/label_left.text = str(score_left)
+	$UI/label_right.text = str(score_right)
+	$UI/label_win.visible = false
+	start_game()
+	
 func _on_balls_timeout() -> void:
 	spawn_ball()
