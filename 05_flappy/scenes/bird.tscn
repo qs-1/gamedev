@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cibu24py6s1w1"]
+
+[ext_resource type="Script" uid="uid://dctrcydce78ng" path="res://scripts/bird.gd" id="1_3po83"]
+[ext_resource type="Texture2D" uid="uid://c5iio6us40btx" path="res://assets/bird.png" id="2_hq4t0"]
+[ext_resource type="AudioStream" uid="uid://0ve02t14exw3" path="res://assets/jump.wav" id="3_hq4t0"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_twsrt"]
+radius = 9.0
+height = 26.0
+
+[node name="Area2D" type="Area2D" unique_id=1953939790]
+script = ExtResource("1_3po83")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2080458443]
+texture = ExtResource("2_hq4t0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1613713514]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_twsrt")
+
+[node name="flap" type="AudioStreamPlayer2D" parent="." unique_id=944042972]
+stream = ExtResource("3_hq4t0")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

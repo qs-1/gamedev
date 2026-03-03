@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://yicge48108e0"]
+
+[ext_resource type="Script" uid="uid://jv5gempkmtvq" path="res://scripts/game.gd" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://cibu24py6s1w1" path="res://scenes/bird.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://cqan44fh4ij0w" path="res://scenes/scrolling_bg.tscn" id="3_lnu2h"]
+
+[node name="game" type="Node2D" unique_id=3194102]
+script = ExtResource("1_uwrxv")
+
+[node name="bird" parent="." unique_id=1953939790 instance=ExtResource("2_yqjtg")]
+position = Vector2(89, 147)
+
+[node name="bg" parent="." unique_id=134617541 instance=ExtResource("3_lnu2h")]
+z_index = -2
+
+[node name="PipeSpawnTimer" type="Timer" parent="." unique_id=2121604130]
+wait_time = 3.0
+
+[connection signal="timeout" from="PipeSpawnTimer" to="." method="_on_pipe_spawn_timer_timeout"]

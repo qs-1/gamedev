@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cqan44fh4ij0w"]
+
+[ext_resource type="Script" uid="uid://cdw7v7ogci5lx" path="res://scripts/scrolling_bg.gd" id="1_rftgw"]
+[ext_resource type="Texture2D" uid="uid://cmajmsttqrabh" path="res://assets/background.png" id="2_ua0qi"]
+
+[node name="Node2D" type="Node2D" unique_id=134617541]
+script = ExtResource("1_rftgw")
+
+[node name="bg1" type="Sprite2D" parent="." unique_id=1284405369]
+texture = ExtResource("2_ua0qi")
+centered = false
+
+[node name="bg2" type="Sprite2D" parent="." unique_id=899192821]
+position = Vector2(1157, 0)
+texture = ExtResource("2_ua0qi")
+centered = false

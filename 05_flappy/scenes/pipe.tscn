@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cgi27n0h52hyw"]
+
+[ext_resource type="Script" uid="uid://bnrgspiw74h23" path="res://scripts/pipe.gd" id="1_arpqm"]
+[ext_resource type="Texture2D" uid="uid://c4lkexw7uqsr8" path="res://assets/pipe.png" id="2_8p0di"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ejsh2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ybk5"]
+
+[node name="Node2D" type="Node2D" unique_id=1326203232]
+script = ExtResource("1_arpqm")
+
+[node name="top_pipe" type="Area2D" parent="." unique_id=1976164934]
+
+[node name="Sprite2D" type="Sprite2D" parent="top_pipe" unique_id=1700686254]
+texture = ExtResource("2_8p0di")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="top_pipe" unique_id=1861898610]
+shape = SubResource("RectangleShape2D_ejsh2")
+
+[node name="mid_pipe" type="Area2D" parent="." unique_id=1223318342]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mid_pipe" unique_id=1223331282]
+shape = SubResource("RectangleShape2D_4ybk5")
+
+[node name="bottom_pipe" type="Area2D" parent="." unique_id=1573867353]
+
+[node name="Sprite2D" type="Sprite2D" parent="bottom_pipe" unique_id=866135039]
+texture = ExtResource("2_8p0di")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bottom_pipe" unique_id=629969940]
+shape = SubResource("RectangleShape2D_ejsh2")
