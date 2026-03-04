@@ -8,6 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ybk5"]
 
 [node name="Node2D" type="Node2D" unique_id=1326203232]
+z_index = 1
 script = ExtResource("1_arpqm")
 
 [node name="top_pipe" type="Area2D" parent="." unique_id=1976164934]

@@ -1,24 +1,40 @@
 [gd_scene format=3 uid="uid://cibu24py6s1w1"]
 
 [ext_resource type="Script" uid="uid://dctrcydce78ng" path="res://scripts/bird.gd" id="1_3po83"]
-[ext_resource type="Texture2D" uid="uid://c5iio6us40btx" path="res://assets/bird.png" id="2_hq4t0"]
-[ext_resource type="AudioStream" uid="uid://0ve02t14exw3" path="res://assets/jump.wav" id="3_hq4t0"]
+[ext_resource type="Texture2D" uid="uid://ds2vab6sjjpf4" path="res://assets/bird-downflap.png" id="2_twsrt"]
+[ext_resource type="Texture2D" uid="uid://ccnrkswmlc8x4" path="res://assets/bird-midflap.png" id="3_b7mtg"]
+[ext_resource type="Texture2D" uid="uid://dpaks2nwcr4w5" path="res://assets/bird-upflap.png" id="4_bdh3x"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jggmu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_twsrt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_b7mtg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_bdh3x")
+}],
+"loop": false,
+"name": &"flap",
+"speed": 12.0
+}]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_twsrt"]
-radius = 9.0
-height = 26.0
+radius = 8.0
+height = 22.0
 
 [node name="Area2D" type="Area2D" unique_id=1953939790]
 script = ExtResource("1_3po83")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2080458443]
-texture = ExtResource("2_hq4t0")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=697114231]
+sprite_frames = SubResource("SpriteFrames_jggmu")
+animation = &"flap"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1613713514]
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_twsrt")
-
-[node name="flap" type="AudioStreamPlayer2D" parent="." unique_id=944042972]
-stream = ExtResource("3_hq4t0")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

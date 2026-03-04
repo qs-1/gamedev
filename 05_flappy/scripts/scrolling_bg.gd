@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var SCROLL_SPEED = 60
+var SCROLL_SPEED = 60
 
 func _process(delta: float) -> void:
 	for child in get_children():
