@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://7su07afaqqqx"]
+
+[ext_resource type="Script" uid="uid://87ab1rmhyy3l" path="res://scripts/game.gd" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://cpapb7c0o42o0" path="res://scenes/ball.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://cc4ibef7gfp5s" path="res://scenes/paddle.tscn" id="3_lnu2h"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lnu2h"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_lbhrr"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_iywne"]
+font_size = 48
+
+[node name="game" type="Node2D" unique_id=412173373]
+script = ExtResource("1_uwrxv")
+
+[node name="ball" parent="." unique_id=5298568 instance=ExtResource("2_yqjtg")]
+position = Vector2(378, 284)
+
+[node name="paddle" parent="." unique_id=556475824 instance=ExtResource("3_lnu2h")]
+position = Vector2(376, 543)
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=1104322483]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 123.0
+offset_bottom = 47.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_lnu2h")
+
+[node name="LivesLabel" type="Label" parent="." unique_id=386849458]
+offset_left = 690.0
+offset_top = 1.0
+offset_right = 803.0
+offset_bottom = 46.0
+text = "Lives: 3"
+label_settings = SubResource("LabelSettings_lbhrr")
+
+[node name="GameOverLabel" type="Label" parent="." unique_id=1176853900]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 112.0
+offset_top = 212.0
+offset_right = 388.0
+offset_bottom = 279.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_iywne")

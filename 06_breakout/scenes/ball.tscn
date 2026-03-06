@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cpapb7c0o42o0"]
+
+[ext_resource type="Script" uid="uid://c52r4ckxrafto" path="res://scripts/ball.gd" id="1_7s4qf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7s4qf"]
+
+[node name="ball" type="Area2D" unique_id=5298568]
+script = ExtResource("1_7s4qf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1058099256]
+position = Vector2(10, 10)
+shape = SubResource("RectangleShape2D_7s4qf")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1917968727]
+offset_right = 20.0
+offset_bottom = 20.0
