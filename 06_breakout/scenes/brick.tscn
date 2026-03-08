@@ -1,19 +1,44 @@
-[gd_scene format=3 uid="uid://6n3woej3ycma"]
+[gd_scene format=3 uid="uid://csp7e6kyr6hwd"]
 
-[ext_resource type="Script" uid="uid://cscnmws5co2be" path="res://scripts/brick.gd" id="1_5l4w1"]
+[ext_resource type="Script" uid="uid://c6sltudyhyl02" path="res://scripts/brick.gd" id="1_5l4w1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jurt7"]
-size = Vector2(60, 20)
+size = Vector2(60, 30)
 
-[node name="brick" type="Area2D" unique_id=18748980 groups=["brick"]]
+[sub_resource type="Curve" id="Curve_5l4w1"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9892904, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0w5h4"]
+curve = SubResource("Curve_5l4w1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5l4w1"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(20, 1, 1)
+spread = 100.0
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+scale_curve = SubResource("CurveTexture_0w5h4")
+
+[node name="brick" type="Area2D" unique_id=1053782112]
 script = ExtResource("1_5l4w1")
-color = Color(0, 0.6126195, 0.6136603, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=547200567]
-position = Vector2(30, 10)
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1628733022]
+offset_right = 60.0
+offset_bottom = 30.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1611623622]
+position = Vector2(30, 15)
 shape = SubResource("RectangleShape2D_jurt7")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1377757537]
-offset_right = 60.0
-offset_bottom = 20.0
-color = Color(0.6851941, 0.00061925023, 0.7374622, 1)
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1474404025]
+position = Vector2(30, 15)
+emitting = false
+amount = 15
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_5l4w1")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

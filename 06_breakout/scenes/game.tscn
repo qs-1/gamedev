@@ -1,55 +1,67 @@
-[gd_scene format=3 uid="uid://7su07afaqqqx"]
+[gd_scene format=3 uid="uid://yicge48108e0"]
 
-[ext_resource type="Script" uid="uid://87ab1rmhyy3l" path="res://scripts/game.gd" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://cpapb7c0o42o0" path="res://scenes/ball.tscn" id="2_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://cc4ibef7gfp5s" path="res://scenes/paddle.tscn" id="3_lnu2h"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_lnu2h"]
-font_size = 32
+[ext_resource type="Script" uid="uid://jv5gempkmtvq" path="res://scripts/game.gd" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://cod53i4ndk1ss" path="res://scenes/paddle.tscn" id="3_lnu2h"]
+[ext_resource type="AudioStream" uid="uid://c2cvlf3e6enox" path="res://assets/hit.wav" id="4_lbhrr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_lbhrr"]
-font_size = 32
+font_size = 24
 
 [sub_resource type="LabelSettings" id="LabelSettings_iywne"]
-font_size = 48
+font_size = 24
 
-[node name="game" type="Node2D" unique_id=412173373]
-script = ExtResource("1_uwrxv")
+[sub_resource type="LabelSettings" id="LabelSettings_p57ef"]
+font_size = 40
 
-[node name="ball" parent="." unique_id=5298568 instance=ExtResource("2_yqjtg")]
-position = Vector2(378, 284)
+[sub_resource type="LabelSettings" id="LabelSettings_lnu2h"]
+font_size = 50
 
-[node name="paddle" parent="." unique_id=556475824 instance=ExtResource("3_lnu2h")]
-position = Vector2(376, 543)
+[node name="game" type="Node2D" unique_id=142538019]
+script = ExtResource("1_yqjtg")
 
-[node name="ScoreLabel" type="Label" parent="." unique_id=1104322483]
+[node name="paddle" parent="." unique_id=1915673628 instance=ExtResource("3_lnu2h")]
+position = Vector2(392, 575)
+
+[node name="PaddleTimer" type="Timer" parent="." unique_id=997842075]
+
+[node name="score" type="Label" parent="." unique_id=544707240]
 offset_left = 2.0
-offset_top = 2.0
-offset_right = 123.0
-offset_bottom = 47.0
-text = "Score: 0"
-label_settings = SubResource("LabelSettings_lnu2h")
-
-[node name="LivesLabel" type="Label" parent="." unique_id=386849458]
-offset_left = 690.0
 offset_top = 1.0
-offset_right = 803.0
-offset_bottom = 46.0
-text = "Lives: 3"
+offset_right = 93.0
+offset_bottom = 35.0
+text = "Score: 0"
 label_settings = SubResource("LabelSettings_lbhrr")
 
-[node name="GameOverLabel" type="Label" parent="." unique_id=1176853900]
-visible = false
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 112.0
-offset_top = 212.0
-offset_right = 388.0
-offset_bottom = 279.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "GAME OVER"
+[node name="lives" type="Label" parent="." unique_id=896295419]
+offset_left = 713.0
+offset_top = 1.0
+offset_right = 798.0
+offset_bottom = 35.0
+text = "Lives: 0"
 label_settings = SubResource("LabelSettings_iywne")
+
+[node name="start" type="Label" parent="." unique_id=684901814]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Press space to start !"
+label_settings = SubResource("LabelSettings_p57ef")
+
+[node name="gameover" type="Label" parent="." unique_id=350175439]
+visible = false
+offset_left = 284.0
+offset_top = 236.0
+offset_right = 547.0
+offset_bottom = 305.0
+text = "Game over"
+label_settings = SubResource("LabelSettings_lnu2h")
+
+[node name="hit" type="AudioStreamPlayer2D" parent="." unique_id=1361156031]
+stream = ExtResource("4_lbhrr")
+
+[node name="background" type="ColorRect" parent="." unique_id=1121172575]
+z_index = -1
+offset_right = 800.0
+offset_bottom = 600.0
+color = Color(0, 0, 0, 1)
+
+[connection signal="timeout" from="PaddleTimer" to="." method="_on_paddle_timer_timeout"]
