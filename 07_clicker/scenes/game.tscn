@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://yicge48108e0"]
+
+[ext_resource type="Script" uid="uid://jv5gempkmtvq" path="res://scripts/game.gd" id="1_yqjtg"]
+
+[node name="game" type="Node2D" unique_id=2139370742]
+script = ExtResource("1_yqjtg")
+
+[node name="bg" type="ColorRect" parent="." unique_id=926774457]
+z_index = -5
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.087875865, 0.087875865, 0.087875865, 1)
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=492296066]
+autostart = true
+
+[node name="Label" type="Label" parent="." unique_id=617988098]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
