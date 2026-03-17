@@ -12,10 +12,33 @@ offset_bottom = 648.0
 color = Color(0.087875865, 0.087875865, 0.087875865, 1)
 
 [node name="SpawnTimer" type="Timer" parent="." unique_id=492296066]
+wait_time = 0.5
 autostart = true
 
 [node name="Label" type="Label" parent="." unique_id=617988098]
 offset_right = 40.0
 offset_bottom = 23.0
 
+[node name="RoundTimer" type="Timer" parent="." unique_id=1212613722]
+wait_time = 30.0
+one_shot = true
+
+[node name="TimeLabel" type="Label" parent="." unique_id=1984726791]
+offset_left = 1112.0
+offset_right = 1152.0
+offset_bottom = 23.0
+
+[node name="StartButton" type="Button" parent="." unique_id=1558981639]
+offset_left = 387.0
+offset_top = 184.0
+offset_right = 433.0
+offset_bottom = 215.0
+text = "Start"
+
+[node name="StatsLabel" type="Label" parent="." unique_id=1064772166]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="timeout" from="RoundTimer" to="." method="_on_round_timer_timeout"]
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
