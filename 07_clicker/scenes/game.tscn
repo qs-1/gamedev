@@ -9,7 +9,7 @@ script = ExtResource("1_yqjtg")
 z_index = -5
 offset_right = 1152.0
 offset_bottom = 648.0
-color = Color(0.087875865, 0.087875865, 0.087875865, 1)
+color = Color(0.030425914, 0.018926766, 0.0063089216, 1)
 
 [node name="SpawnTimer" type="Timer" parent="." unique_id=492296066]
 wait_time = 0.5
