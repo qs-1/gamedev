@@ -17,3 +17,6 @@ web_build/
 
 # others
 github_pages_link
+
+# deployment worktree
+/gh-pages/

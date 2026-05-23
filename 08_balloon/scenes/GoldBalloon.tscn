@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://dd3o8xuuuw3dg"]
+
+[ext_resource type="Script" uid="uid://c427070h6arg6" path="res://scenes/Balloon.gd" id="1_bdnu2"]
+[ext_resource type="Texture2D" uid="uid://dqjrlbalw2cda" path="res://assets/balloon_gold.png" id="2_bdnu2"]
+[ext_resource type="AudioStream" uid="uid://b1j5wr871uk28" path="res://assets/pop.mp3" id="3_41a4t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0g4tu"]
+atlas = ExtResource("2_bdnu2")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_41a4t"]
+atlas = ExtResource("2_bdnu2")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0kofe"]
+atlas = ExtResource("2_bdnu2")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_or8fb"]
+atlas = ExtResource("2_bdnu2")
+region = Rect2(0, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snhev"]
+atlas = ExtResource("2_bdnu2")
+region = Rect2(16, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3l8ix"]
+atlas = ExtResource("2_bdnu2")
+region = Rect2(32, 32, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3fti4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0g4tu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_41a4t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0kofe")
+}],
+"loop": 1,
+"name": &"fly",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_or8fb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snhev")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l8ix")
+}],
+"loop": 0,
+"name": &"pop",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y84o2"]
+radius = 36.0
+height = 82.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h2wsl"]
+height = 48.0
+
+[node name="GoldBalloon" type="Node2D" unique_id=910231757 groups=["balloons", "powerup"]]
+script = ExtResource("1_bdnu2")
+points = 0
+speed = 150.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1512379826 groups=["powerup"]]
+texture_filter = 1
+position = Vector2(3.8147e-06, 3.05176e-05)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_3fti4")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=839290941]
+
+[node name="OvalCollShapeLarge" type="CollisionShape2D" parent="Area2D" unique_id=1795161239]
+position = Vector2(0, -34)
+shape = SubResource("CapsuleShape2D_y84o2")
+
+[node name="OvalCollShapeSmall" type="CollisionShape2D" parent="Area2D" unique_id=969112009]
+position = Vector2(-1, 14)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_h2wsl")
+
+[node name="PopSound" type="AudioStreamPlayer2D" parent="." unique_id=892633446]
+stream = ExtResource("3_41a4t")

@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://dfuqpiysiayr6"]
+
+[ext_resource type="Script" uid="uid://6rokfndu1kih" path="res://scenes/Main.gd" id="1_x8uo1"]
+[ext_resource type="PackedScene" uid="uid://cudkqhcjn0wus" path="res://scenes/Player.tscn" id="2_7mv0u"]
+[ext_resource type="PackedScene" uid="uid://2bpcxe7sm0kb" path="res://scenes/HUD.tscn" id="3_4ccbr"]
+[ext_resource type="AudioStream" uid="uid://b1j5wr871uk28" path="res://assets/pop.mp3" id="4_rarhs"]
+[ext_resource type="Script" uid="uid://uby7bvgl6d37" path="res://scenes/option_button.gd" id="5_vcsgt"]
+[ext_resource type="PackedScene" uid="uid://cc63ou0o5nb1x" path="res://scenes/particles.tscn" id="6_c01mt"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nxtc6"]
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_rarhs"]
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_c01mt"]
+font_size = 18
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_rarhs"]
+
+[node name="Main" type="Node2D" unique_id=1955878620]
+script = ExtResource("1_x8uo1")
+
+[node name="Player" parent="." unique_id=1657011605 instance=ExtResource("2_7mv0u")]
+visible = false
+z_index = 1
+position = Vector2(563, 323)
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=615646587]
+wait_time = 0.15
+
+[node name="HUD" parent="." unique_id=922234388 instance=ExtResource("3_4ccbr")]
+
+[node name="pause" type="ColorRect" parent="HUD" unique_id=1410362689]
+process_mode = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.48235294)
+
+[node name="Label" type="Label" parent="HUD/pause" unique_id=1928632055]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -161.0
+offset_right = 52.5
+offset_bottom = -119.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Paused"
+label_settings = SubResource("LabelSettings_nxtc6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="HUD/pause" unique_id=872449880]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -50.0
+offset_right = 100.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "Resume
+"
+
+[node name="pop" type="AudioStreamPlayer2D" parent="." unique_id=1416084602]
+stream = ExtResource("4_rarhs")
+max_polyphony = 100
+
+[node name="menu" type="CanvasLayer" parent="." unique_id=1420636313]
+
+[node name="Label" type="Label" parent="menu" unique_id=570466281]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.29700002
+anchor_right = 0.5
+anchor_bottom = 0.29700002
+offset_left = -112.0
+offset_top = 55.54399
+offset_right = 117.0
+offset_bottom = 97.54399
+grow_horizontal = 2
+grow_vertical = 2
+text = "Select difficulty:"
+label_settings = SubResource("LabelSettings_rarhs")
+
+[node name="high" type="Label" parent="menu" unique_id=1758548548]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.29700002
+anchor_right = 0.5
+anchor_bottom = 0.29700002
+offset_left = -64.0
+offset_top = -88.45601
+offset_right = 114.0
+offset_bottom = -46.45601
+grow_horizontal = 2
+grow_vertical = 2
+text = "Highscore: "
+label_settings = SubResource("LabelSettings_c01mt")
+
+[node name="OptionButton" type="OptionButton" parent="menu" unique_id=1734713165]
+process_mode = 3
+offset_left = 528.0
+offset_top = 336.0
+offset_right = 628.0
+offset_bottom = 376.0
+button_group = SubResource("ButtonGroup_rarhs")
+selected = 1
+item_count = 3
+popup/item_0/text = "Easy"
+popup/item_0/id = 1
+popup/item_1/text = "Medium"
+popup/item_1/id = 2
+popup/item_2/text = "Hard"
+popup/item_2/id = 3
+script = ExtResource("5_vcsgt")
+
+[node name="play" type="Button" parent="menu" unique_id=94495870]
+offset_left = 552.0
+offset_top = 424.0
+offset_right = 593.0
+offset_bottom = 455.0
+text = "Play"
+
+[node name="partic" parent="." unique_id=2011216729 instance=ExtResource("6_c01mt")]
+
+[connection signal="pressed" from="HUD/pause/Button" to="." method="_on_button_pressed"]
+[connection signal="item_selected" from="menu/OptionButton" to="menu/OptionButton" method="_on_item_selected"]
+[connection signal="pressed" from="menu/play" to="." method="_on_play_pressed"]
