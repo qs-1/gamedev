@@ -38,8 +38,14 @@ func load_from_file():
 func play_pop_particles(pos: Vector2) -> void:
 	var fx = particle_scene.instantiate()
 	fx.global_position = pos
-	fx.emitting = true
 	add_child(fx)
+
+	fx.restart()
+	fx.emitting = true
+
+	await get_tree().create_timer(0.8).timeout
+	if is_instance_valid(fx):
+		fx.queue_free()
 
 func _ready():
 	red_balloon_scene = load("res://scenes/RedBalloon.tscn")
@@ -55,6 +61,7 @@ func _ready():
 	$HUD.visible = false
 	$Player.visible = false
 	show_menu(true)
+	play_pop_particles(Vector2(-9999, -9999))
 
 func show_menu(state):
 	highscore = load_from_file()
