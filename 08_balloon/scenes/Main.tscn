@@ -30,6 +30,7 @@ position = Vector2(563, 323)
 wait_time = 0.15
 
 [node name="HUD" parent="." unique_id=922234388 instance=ExtResource("3_4ccbr")]
+visible = false
 
 [node name="pause" type="ColorRect" parent="HUD" unique_id=1410362689]
 process_mode = 2
@@ -85,13 +86,13 @@ max_polyphony = 100
 [node name="Label" type="Label" parent="menu" unique_id=570466281]
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.29700002
+anchor_top = 0.41500002
 anchor_right = 0.5
-anchor_bottom = 0.29700002
+anchor_bottom = 0.41500002
 offset_left = -112.0
-offset_top = 55.54399
+offset_top = -20.920013
 offset_right = 117.0
-offset_bottom = 97.54399
+offset_bottom = 21.079987
 grow_horizontal = 2
 grow_vertical = 2
 text = "Select difficulty:"
@@ -99,14 +100,14 @@ label_settings = SubResource("LabelSettings_rarhs")
 
 [node name="high" type="Label" parent="menu" unique_id=1758548548]
 anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.29700002
-anchor_right = 0.5
-anchor_bottom = 0.29700002
-offset_left = -64.0
-offset_top = -88.45601
-offset_right = 114.0
-offset_bottom = -46.45601
+anchor_left = 0.521
+anchor_top = 0.193
+anchor_right = 0.521
+anchor_bottom = 0.193
+offset_left = -88.19202
+offset_top = -21.064003
+offset_right = 89.80798
+offset_bottom = 20.935997
 grow_horizontal = 2
 grow_vertical = 2
 text = "Highscore: "
@@ -114,10 +115,17 @@ label_settings = SubResource("LabelSettings_c01mt")
 
 [node name="OptionButton" type="OptionButton" parent="menu" unique_id=1734713165]
 process_mode = 3
-offset_left = 528.0
-offset_top = 336.0
-offset_right = 628.0
-offset_bottom = 376.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -20.0
+offset_right = 50.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 button_group = SubResource("ButtonGroup_rarhs")
 selected = 1
 item_count = 3
@@ -130,10 +138,17 @@ popup/item_2/id = 3
 script = ExtResource("5_vcsgt")
 
 [node name="play" type="Button" parent="menu" unique_id=94495870]
-offset_left = 552.0
-offset_top = 424.0
-offset_right = 593.0
-offset_bottom = 455.0
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.66700006
+anchor_right = 0.5
+anchor_bottom = 0.66700006
+offset_left = -20.5
+offset_top = -13.716034
+offset_right = 20.5
+offset_bottom = 17.283966
+grow_horizontal = 2
+grow_vertical = 2
 text = "Play"
 
 [node name="partic" parent="." unique_id=2011216729 instance=ExtResource("6_c01mt")]
