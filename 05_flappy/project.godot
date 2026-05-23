@@ -19,6 +19,8 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 window/size/viewport_width=512
 window/size/viewport_height=288
 window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+window/stretch/scale_mode="integer"
 
 [file_customization]
 
