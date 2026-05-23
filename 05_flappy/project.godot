@@ -12,14 +12,13 @@ config_version=5
 
 config/name="Flappy Bird"
 run/main_scene="uid://yicge48108e0"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [display]
 
 window/size/viewport_width=512
 window/size/viewport_height=288
-window/stretch/mode="viewport"
-window/stretch/aspect="keep"
+window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
 
 [file_customization]
