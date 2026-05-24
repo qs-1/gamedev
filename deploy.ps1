@@ -247,12 +247,29 @@ progressive_web_app/enabled=false
     
     $process = Start-Process -FilePath $godotExe -ArgumentList $exportArgs -NoNewWindow -Wait -PassThru -RedirectStandardOutput $outTemp -RedirectStandardError $errTemp
     
+    if ($process.ExitCode -ne 0) {
+        Write-ErrorLog "Godot export failed with exit code $($process.ExitCode)!"
+        if (Test-Path $errTemp) {
+            $errContent = Get-Content $errTemp -Raw
+            if ($errContent) {
+                Write-ErrorLog "Godot Error Output:"
+                Write-Host $errContent -ForegroundColor Red
+            }
+        }
+        if (Test-Path $outTemp) {
+            $outContent = Get-Content $outTemp -Raw
+            if ($outContent) {
+                Write-ErrorLog "Godot Standard Output:"
+                Write-Host $outContent -ForegroundColor Gray
+            }
+        }
+    }
+
     # Clean up temp files if they exist
     if (Test-Path $outTemp) { Remove-Item $outTemp -Force | Out-Null }
     if (Test-Path $errTemp) { Remove-Item $errTemp -Force | Out-Null }
 
     if ($process.ExitCode -ne 0) {
-        Write-ErrorLog "Godot export failed with exit code $($process.ExitCode)!"
         continue
     }
 

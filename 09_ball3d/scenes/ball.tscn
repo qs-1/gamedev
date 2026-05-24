@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://d03x58f4qv12"]
+
+[ext_resource type="ArrayMesh" uid="uid://bha5spb6k8t1e" path="res://assets/models/pixar-ball.obj" id="1_41u45"]
+[ext_resource type="Script" uid="uid://cwn4116jfw2je" path="res://scripts/ball.gd" id="1_ktgx5"]
+[ext_resource type="Texture2D" uid="uid://6rcuvghxilxj" path="res://assets/textures/pixar-ball.png" id="2_ktgx5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ktgx5"]
+bounce = 0.3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mel2l"]
+radius = 1.0287747
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cbx31"]
+albedo_texture = ExtResource("2_ktgx5")
+roughness = 0.4
+
+[node name="ball" type="RigidBody3D" unique_id=2115016708 groups=["ball"]]
+mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_ktgx5")
+angular_damp = 1.0
+script = ExtResource("1_ktgx5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1733446602]
+shape = SubResource("SphereShape3D_mel2l")
+
+[node name="PixarBall" type="MeshInstance3D" parent="." unique_id=461460787]
+mesh = ExtResource("1_41u45")
+surface_material_override/0 = SubResource("StandardMaterial3D_cbx31")
+
+[node name="camrig" type="Node3D" parent="." unique_id=2057449080]
+
+[node name="Camera3D" type="Camera3D" parent="camrig" unique_id=1033322713]
+transform = Transform3D(1, 0, 0, 0, 0.885226, 0.46516111, 0, -0.46516111, 0.885226, 0, 2.9, 3.5)
+current = true
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=162297624]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9324945, 0)
+target_position = Vector3(0, -1.515, 0)

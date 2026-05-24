@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://me1rmxtvdban"]
+
+[ext_resource type="PackedScene" uid="uid://cph4dxq1uwbll" path="res://assets/models/blocks.gltf" id="1_hch05"]
+
+[node name="blocks" unique_id=1222311596 instance=ExtResource("1_hch05")]
