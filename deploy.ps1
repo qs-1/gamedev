@@ -5,7 +5,8 @@ param (
     [string]$Project,
     [string]$GodotPath,
     [switch]$Force,
-    [switch]$Help
+    [switch]$Help,
+    [switch]$Auto
 )
 
 # Show help if requested
@@ -18,12 +19,14 @@ Options:
   -GodotPath <path>     Path to the Godot executable.
   -Project <name>       Force export a specific project directory (e.g., '08_balloon' or 'balloon' or '08').
   -Force                Force re-export even if the project is already exported.
+  -Auto                 Auto/quick mode (accepts all defaults, commits, and pushes automatically).
   -Help                 Show this help message.
 
 Examples:
   deploy                Check and deploy any missing projects (default behavior).
   deploy balloon        Export the balloon project.
-  deploy 08             Export project 08.
+  deploy -Auto          Automatically deploy all missing/modified projects without prompting.
+  deploy 08 -Auto       Automatically deploy project 08 with default settings.
 "@
     exit 0
 }
@@ -129,24 +132,57 @@ if ($projectDirs.Count -eq 0) {
     exit 1
 }
 
-# Determine if we are in interactive mode (i.e. no specific project argument provided)
+# Determine if we are in interactive mode (i.e. no specific project argument provided and no auto mode)
 $isInteractive = $true
-if ($Project) {
+if ($Project -or $Auto) {
     $isInteractive = $false
 }
 
 # Filter by user selection
 $targetProjects = @()
 if (-not $isInteractive) {
-    Write-Info "Searching for project matching: '$Project'..."
-    foreach ($dir in $projectDirs) {
-        if ($dir.Name -like "*$Project*" -or $deployMappings[$dir.Name] -like "*$Project*") {
-            $targetProjects += $dir
+    if ($Project) {
+        Write-Info "Searching for project matching: '$Project'..."
+        foreach ($dir in $projectDirs) {
+            if ($dir.Name -like "*$Project*" -or $deployMappings[$dir.Name] -like "*$Project*") {
+                $targetProjects += $dir
+            }
         }
-    }
-    if ($targetProjects.Count -eq 0) {
-        Write-ErrorLog "No project directory matches '$Project'!"
-        exit 1
+        if ($targetProjects.Count -eq 0) {
+            Write-ErrorLog "No project directory matches '$Project'!"
+            exit 1
+        }
+    } else {
+        # Auto mode without a specified project: find all missing/out-of-date projects
+        Write-Info "Auto mode: Scanning for missing or outdated projects..."
+        $missingProjects = @()
+        foreach ($dir in $projectDirs) {
+            $deployName = $deployMappings[$dir.Name]
+            if (-not $deployName) {
+                $deployName = ($dir.Name -replace '^\d+_', '').ToLower()
+            }
+            $indexPath = Join-Path $PSScriptRoot "gh-pages\$deployName\index.html"
+            
+            $isOutdated = $false
+            if (-not (Test-Path $indexPath)) {
+                $isOutdated = $true
+            } else {
+                $exportTime = (Get-Item $indexPath).LastWriteTime
+                $sourceFiles = Get-ChildItem -Path $dir.FullName -Recurse -File -ErrorAction SilentlyContinue | 
+                               Where-Object { $_.FullName -notmatch '\\\.godot\\' -and $_.Name -ne 'export_presets.cfg' }
+                $lastSourceWrite = $null
+                if ($sourceFiles) {
+                    $lastSourceWrite = ($sourceFiles | Measure-Object -Property LastWriteTime -Maximum).Maximum
+                }
+                if ($lastSourceWrite -and $lastSourceWrite -gt $exportTime) {
+                    $isOutdated = $true
+                }
+            }
+            if ($isOutdated) {
+                $missingProjects += $dir
+            }
+        }
+        $targetProjects = $missingProjects
     }
 } else {
     # Interactive project selection menu
@@ -186,7 +222,6 @@ if (-not $isInteractive) {
             }
         }
         
-        
         $title = $titleMappings[$dir.Name]
         if (-not $title) {
             # Try reading project.godot config/name
@@ -207,6 +242,7 @@ if (-not $isInteractive) {
     
     Write-Host ""
     Write-Host "  [0] Deploy all missing/not exported projects ($($missingProjects.Count) found)" -ForegroundColor Cyan
+    Write-Host "  [F] Fast/Auto Mode - Deploy missing/outdated projects automatically with all defaults" -ForegroundColor Green
     Write-Host "  [A] Force rebuild & deploy ALL projects ($($projectDirs.Count) found)" -ForegroundColor Yellow
     Write-Host "  [Q] Quit" -ForegroundColor Red
     Write-Host ""
@@ -223,6 +259,14 @@ if (-not $isInteractive) {
     } elseif ($selection -eq 'A') {
         $targetProjects = $projectDirs
         $Force = $true
+    } elseif ($selection -eq 'F') {
+        if ($missingProjects.Count -eq 0) {
+            Write-Success "All projects are already exported! (Choose specific number or 'A' to rebuild anyway)"
+            exit 0
+        }
+        $targetProjects = $missingProjects
+        $Auto = $true
+        $isInteractive = $false
     } elseif ($selection -eq '0') {
         if ($missingProjects.Count -eq 0) {
             Write-Success "All projects are already exported! (Choose specific number or 'A' to rebuild anyway)"
@@ -490,7 +534,10 @@ if (Test-Path (Join-Path $gitDir ".git")) {
         Write-Host $changes -ForegroundColor Gray
         
         Write-Host ""
-        $response = Read-Host "Do you want to commit these changes to deploy? (y/n) [Default: y]"
+        $response = "y"
+        if (-not $Auto) {
+            $response = Read-Host "Do you want to commit these changes to deploy? (y/n) [Default: y]"
+        }
         if ($response.Trim().ToLower() -ne 'n') {
             # Construct a dynamic default commit message based on exported games
             $defaultMsg = "deploy: automated Godot project export"
@@ -498,8 +545,11 @@ if (Test-Path (Join-Path $gitDir ".git")) {
                 $defaultMsg = "deploy: export " + ($exportedTitles -join ", ")
             }
             
-            $commitMsg = Read-Host "Enter deployment commit message [Default: '$defaultMsg']"
-            $commitMsg = $commitMsg.Trim()
+            $commitMsg = ""
+            if (-not $Auto) {
+                $commitMsg = Read-Host "Enter deployment commit message [Default: '$defaultMsg']"
+                $commitMsg = $commitMsg.Trim()
+            }
             if (-not $commitMsg) {
                 $commitMsg = $defaultMsg
             }
@@ -508,7 +558,10 @@ if (Test-Path (Join-Path $gitDir ".git")) {
             git -C $gitDir add -A
             git -C $gitDir commit -m $commitMsg
             
-            $pushResponse = Read-Host "Push to GitHub Pages now? (y/n) [Default: y]"
+            $pushResponse = "y"
+            if (-not $Auto) {
+                $pushResponse = Read-Host "Push to GitHub Pages now? (y/n) [Default: y]"
+            }
             if ($pushResponse.Trim().ToLower() -ne 'n') {
                 Write-Info "Pushing to remote repository..."
                 git -C $gitDir push origin HEAD:gh-pages
@@ -539,7 +592,10 @@ if (Test-Path (Join-Path $PSScriptRoot ".git")) {
         Write-Host $outerChanges -ForegroundColor Gray
         
         Write-Host ""
-        $outerResponse = Read-Host "Do you want to commit these outer repository changes? (y/n) [Default: y]"
+        $outerResponse = "y"
+        if (-not $Auto) {
+            $outerResponse = Read-Host "Do you want to commit these outer repository changes? (y/n) [Default: y]"
+        }
         if ($outerResponse.Trim().ToLower() -ne 'n') {
             # Construct a dynamic default outer repository commit message
             $defaultOuterMsg = "update games"
@@ -547,8 +603,11 @@ if (Test-Path (Join-Path $PSScriptRoot ".git")) {
                 $defaultOuterMsg = "update: export " + ($exportedTitles -join ", ")
             }
             
-            $msg = Read-Host "Enter commit message [Default: '$defaultOuterMsg']"
-            $msg = $msg.Trim()
+            $msg = ""
+            if (-not $Auto) {
+                $msg = Read-Host "Enter commit message [Default: '$defaultOuterMsg']"
+                $msg = $msg.Trim()
+            }
             if (-not $msg) {
                 $msg = $defaultOuterMsg
             }
@@ -557,7 +616,10 @@ if (Test-Path (Join-Path $PSScriptRoot ".git")) {
             git -C $PSScriptRoot add -A
             git -C $PSScriptRoot commit -m $msg
             
-            $outerPushResponse = Read-Host "Push outer changes to remote now? (y/n) [Default: y]"
+            $outerPushResponse = "y"
+            if (-not $Auto) {
+                $outerPushResponse = Read-Host "Push outer changes to remote now? (y/n) [Default: y]"
+            }
             if ($outerPushResponse.Trim().ToLower() -ne 'n') {
                 Write-Info "Pushing outer changes to remote..."
                 $currentBranch = git -C $PSScriptRoot branch --show-current
