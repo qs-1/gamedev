@@ -385,5 +385,41 @@ if (Test-Path (Join-Path $gitDir ".git")) {
     Write-Warning "gh-pages is not a Git repository worktree. Skipping Git deploy."
 }
 
+# 6. Outer Repository Git Status and Commit Interaction
+Write-Header "Outer Repository Git Status"
+if (Test-Path (Join-Path $PSScriptRoot ".git")) {
+    $outerChanges = git -C $PSScriptRoot status --porcelain
+    if ($outerChanges) {
+        Write-Info "Uncommitted changes/untracked files detected in outer repository:"
+        Write-Host $outerChanges -ForegroundColor Gray
+        
+        Write-Host ""
+        $outerResponse = Read-Host "Do you want to commit and push these outer repository changes? (y/n)"
+        if ($outerResponse.Trim().ToLower() -eq 'y') {
+            $msg = Read-Host "Enter commit message (default: 'update games')"
+            $msg = $msg.Trim()
+            if (-not $msg) {
+                $msg = "update games"
+            }
+            Write-Info "Adding and committing outer changes..."
+            git -C $PSScriptRoot add -A
+            git -C $PSScriptRoot commit -m $msg
+            Write-Info "Pushing outer changes to remote..."
+            $currentBranch = git -C $PSScriptRoot branch --show-current
+            if (-not $currentBranch) { $currentBranch = "master" }
+            git -C $PSScriptRoot push origin $currentBranch
+            if ($LASTEXITCODE -ne 0) {
+                Write-ErrorLog "Failed to push outer changes to remote repository! (Exit code: $LASTEXITCODE)"
+            } else {
+                Write-Success "Outer repository changes committed and pushed successfully!"
+            }
+        } else {
+            Write-Info "Skipping outer repository commit/push."
+        }
+    } else {
+        Write-Success "No changes in outer repository. Everything up to date!"
+    }
+}
+
 Write-Host ""
 Write-Success "Deployment run completed!"
