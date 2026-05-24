@@ -14,6 +14,19 @@ config/name="3d-ball"
 run/main_scene="uid://cd1mifrqhteub"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
+[autoload]
+
+GameManager="*uid://or7jge4b5bbi"
+Hud="*uid://cg1gy67qjwuic"
+
+[file_customization]
+
+folder_colors={
+"res://assets/": "red",
+"res://scenes/": "green",
+"res://scripts/": "blue"
+}
+
 [input]
 
 forward={

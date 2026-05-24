@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://mtgxhywyk0sr"]
+
+[ext_resource type="Script" uid="uid://bwkcfpsygpw1p" path="res://scripts/pickup.gd" id="1_7cqbe"]
+[ext_resource type="Texture2D" uid="uid://dvm0venebl73t" path="res://assets/textures/lowpoly-texture.png" id="1_pg2rt"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3cfvr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lxoxb"]
+albedo_texture = ExtResource("1_pg2rt")
+
+[sub_resource type="SphereMesh" id="SphereMesh_mel2l"]
+material = SubResource("StandardMaterial3D_lxoxb")
+
+[node name="Area3D" type="Area3D" unique_id=1136219258]
+script = ExtResource("1_7cqbe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=984850896]
+shape = SubResource("SphereShape3D_3cfvr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1100641982]
+mesh = SubResource("SphereMesh_mel2l")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cg1gy67qjwuic"]
+
+[ext_resource type="Script" uid="uid://joh5m5w1ik6" path="res://scripts/hud.gd" id="1_37p78"]
+
+[node name="Hud" type="CanvasLayer" unique_id=1577432008]
+script = ExtResource("1_37p78")
+
+[node name="Score" type="Label" parent="." unique_id=624331358]
+offset_left = 8.0
+offset_top = 7.0
+offset_right = 69.0
+offset_bottom = 30.0
+text = "Score: 0"
+
+[node name="Time" type="Label" parent="." unique_id=13264443]
+offset_left = 16.0
+offset_top = 38.0
+offset_right = 58.0
+offset_bottom = 61.0
+text = "00:00"

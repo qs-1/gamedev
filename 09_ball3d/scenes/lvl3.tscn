@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://b345cs4swq3gs"]
+
+[ext_resource type="MeshLibrary" uid="uid://bbrstvbibrcq" path="res://assets/models/blocks.meshlib" id="1_qe4d8"]
+[ext_resource type="PackedScene" uid="uid://d03x58f4qv12" path="res://scenes/ball.tscn" id="2_br341"]
+[ext_resource type="Script" uid="uid://bey5ioy3d4ccw" path="res://scripts/death.gd" id="3_ry0qh"]
+[ext_resource type="Script" uid="uid://di02t7ymcmbh3" path="res://scripts/win.gd" id="4_kya1d"]
+
+[sub_resource type="Environment" id="Environment_t5y7p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t5y7p"]
+size = Vector3(335.43848, 120.998535, 249.64453)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mel2l"]
+size = Vector3(2.8462524, 1.4031677, 2.8569336)
+
+[node name="lvl3" type="Node3D" unique_id=959289986]
+
+[node name="GridMap" type="GridMap" parent="." unique_id=2016823752]
+mesh_library = ExtResource("1_qe4d8")
+cell_size = Vector3(4, 4, 4)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(0, 65535, 1, 0, 65534, 2, 65535, 65534, 1048577, 65535, 65535, 1441792, 0, 0, 1441794, 65535, 0, 1441793, 131062, 65530, 1441792, 131062, 65532, 1441792, 131062, 65533, 1441792, 131062, 65534, 1441792, 131062, 65535, 1441792, 131062, 0, 1441792, 131062, 1, 1441792, 131062, 2, 1048576, 131062, 4, 1048576, 131063, 65530, 1441792, 131063, 4, 1048576, 131064, 65530, 1441792, 131064, 4, 1048576, 131065, 65531, 1441792, 131065, 65532, 1441792, 131065, 2, 1441792, 131065, 3, 1441792, 65534, 65535, 1048576, 65533, 65535, 1048576, 65532, 65535, 1048576, 65531, 65535, 1048576, 65530, 65535, 1048576, 65529, 65535, 1048576, 65528, 65535, 1048580, 65532, 3, 1441797, 65532, 65531, 1441797)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="ball" parent="." unique_id=2115016708 instance=ExtResource("2_br341")]
+transform = Transform3D(-0.0070509315, 0, 0.9999752, 0, 1, 0, -0.9999752, 0, -0.0070509315, 1.62081, 1, -2.6729064)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=18427323]
+environment = SubResource("Environment_t5y7p")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=35958589]
+transform = Transform3D(0.8660254, 0.38302222, -0.32139382, 0, 0.64278764, 0.76604444, 0.5, -0.66341394, 0.5566704, 0, 11.225, 0)
+light_color = Color(1, 1, 0.80784315, 1)
+shadow_enabled = true
+
+[node name="death" type="Area3D" parent="." unique_id=1417602815]
+script = ExtResource("3_ry0qh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="death" unique_id=732660021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.857107, -67.391174, 11.941729)
+shape = SubResource("BoxShape3D_t5y7p")
+debug_color = Color(0.6552012, 0.6057142, 0, 0.41960785)
+
+[node name="win" type="Area3D" parent="." unique_id=1231295584]
+script = ExtResource("4_kya1d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="win" unique_id=1826393051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.974279, -1.2057676, 13.958469)
+shape = SubResource("BoxShape3D_mel2l")
+
+[node name="win2" type="Area3D" parent="." unique_id=1411973408]
+script = ExtResource("4_kya1d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="win2" unique_id=946124479]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.974279, -1.2057676, -18.140236)
+shape = SubResource("BoxShape3D_mel2l")
+
+[connection signal="body_entered" from="death" to="death" method="_on_body_entered"]
+[connection signal="body_entered" from="win" to="win" method="_on_body_entered"]
+[connection signal="body_entered" from="win2" to="win2" method="_on_body_entered"]

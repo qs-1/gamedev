@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://b0ugcs46h5e0t"]
+
+[ext_resource type="MeshLibrary" uid="uid://bbrstvbibrcq" path="res://assets/models/blocks.meshlib" id="1_jaojv"]
+[ext_resource type="PackedScene" uid="uid://d03x58f4qv12" path="res://scenes/ball.tscn" id="2_3n54i"]
+[ext_resource type="Script" uid="uid://bey5ioy3d4ccw" path="res://scripts/death.gd" id="3_nb5j2"]
+[ext_resource type="Script" uid="uid://di02t7ymcmbh3" path="res://scripts/win.gd" id="4_r7wj8"]
+
+[sub_resource type="Environment" id="Environment_t5y7p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t5y7p"]
+size = Vector3(335.43848, 120.998535, 249.64453)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mel2l"]
+size = Vector3(2.8462524, 1.4031677, 2.8569336)
+
+[node name="lvl2" type="Node3D" unique_id=959289986]
+
+[node name="GridMap" type="GridMap" parent="." unique_id=2016823752]
+mesh_library = ExtResource("1_jaojv")
+cell_size = Vector3(4, 4, 4)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(0, 65535, 1441794, 0, 65534, 2, 65535, 65534, 1048577, 65535, 65535, 1441793, 65533, 65535, 0, 65532, 65534, 0, 65531, 65535, 0, 65530, 65534, 0, 65528, 65535, 0, 65527, 65535, 0, 65526, 65535, 0, 65525, 0, 786436, 65526, 0, 786436, 65527, 0, 786436, 65528, 0, 786436, 65525, 65534, 393220, 65526, 65534, 393220, 65527, 65534, 393220, 65528, 65534, 393220, 65524, 65535, 1048581, 65525, 65535, 1048576)
+}
+
+[node name="ball" parent="." unique_id=2115016708 instance=ExtResource("2_3n54i")]
+transform = Transform3D(-0.0070509315, 0, 0.9999752, 0, 1, 0, -0.9999752, 0, -0.0070509315, 1.62081, 1, -2.6729064)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=18427323]
+environment = SubResource("Environment_t5y7p")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=35958589]
+transform = Transform3D(0.8660254, 0.38302222, -0.32139382, 0, 0.64278764, 0.76604444, 0.5, -0.66341394, 0.5566704, 0, 11.225, 0)
+light_color = Color(1, 1, 0.80784315, 1)
+shadow_enabled = true
+
+[node name="death" type="Area3D" parent="." unique_id=1417602815]
+script = ExtResource("3_nb5j2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="death" unique_id=732660021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.857107, -67.391174, 11.941729)
+shape = SubResource("BoxShape3D_t5y7p")
+debug_color = Color(0.6552012, 0.6057142, 0, 0.41960785)
+
+[node name="win" type="Area3D" parent="." unique_id=1231295584]
+script = ExtResource("4_r7wj8")
+next_level = "uid://b345cs4swq3gs"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="win" unique_id=1826393051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.99585, -1.2057676, -1.9838605)
+shape = SubResource("BoxShape3D_mel2l")
+
+[connection signal="body_entered" from="death" to="death" method="_on_body_entered"]
+[connection signal="body_entered" from="win" to="win" method="_on_body_entered"]

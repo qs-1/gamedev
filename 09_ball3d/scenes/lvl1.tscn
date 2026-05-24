@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://cd1mifrqhteub"]
 
+[ext_resource type="Script" uid="uid://ffpeowvwidum" path="res://scripts/lvl_1.gd" id="1_6j3wd"]
 [ext_resource type="MeshLibrary" uid="uid://bbrstvbibrcq" path="res://assets/models/blocks.meshlib" id="1_xmh5c"]
 [ext_resource type="PackedScene" uid="uid://d03x58f4qv12" path="res://scenes/ball.tscn" id="2_g83ud"]
 [ext_resource type="Script" uid="uid://bey5ioy3d4ccw" path="res://scripts/death.gd" id="3_6j3wd"]
 [ext_resource type="Script" uid="uid://di02t7ymcmbh3" path="res://scripts/win.gd" id="4_hp87r"]
+[ext_resource type="PackedScene" uid="uid://mtgxhywyk0sr" path="res://scenes/pickup.tscn" id="5_g83ud"]
 
 [sub_resource type="Environment" id="Environment_t5y7p"]
 
@@ -11,9 +13,10 @@
 size = Vector3(335.43848, 120.998535, 249.64453)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mel2l"]
-size = Vector3(2.8462524, 1.5786133, 2.8569336)
+size = Vector3(2.8462524, 1.4031677, 2.8569336)
 
 [node name="lvl1" type="Node3D" unique_id=959289986]
+script = ExtResource("1_6j3wd")
 
 [node name="GridMap" type="GridMap" parent="." unique_id=2016823752]
 mesh_library = ExtResource("1_xmh5c")
@@ -44,9 +47,15 @@ debug_color = Color(0.6552012, 0.6057142, 0, 0.41960785)
 
 [node name="win" type="Area3D" parent="." unique_id=1231295584]
 script = ExtResource("4_hp87r")
+next_level = "uid://b0ugcs46h5e0t"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="win" unique_id=1826393051]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.993316, -1.3637362, 37.973595)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.993316, -1.4514589, 37.973595)
 shape = SubResource("BoxShape3D_mel2l")
 
+[node name="Area3D" parent="." unique_id=1136219258 instance=ExtResource("5_g83ud")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.051392, 4.860718, 25.535461)
+points = 10
+
 [connection signal="body_entered" from="death" to="death" method="_on_body_entered"]
+[connection signal="body_entered" from="win" to="win" method="_on_body_entered"]
