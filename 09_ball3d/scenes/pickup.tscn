@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bwkcfpsygpw1p" path="res://scripts/pickup.gd" id="1_7cqbe"]
 [ext_resource type="Texture2D" uid="uid://dvm0venebl73t" path="res://assets/textures/lowpoly-texture.png" id="1_pg2rt"]
+[ext_resource type="AudioStream" uid="uid://culb5itf453ra" path="res://assets/sounds/pickup.ogg" id="3_gyxxy"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_3cfvr"]
 
@@ -19,5 +20,10 @@ shape = SubResource("SphereShape3D_3cfvr")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1100641982]
 mesh = SubResource("SphereMesh_mel2l")
+
+[node name="pickup" type="AudioStreamPlayer3D" parent="." unique_id=632366324]
+stream = ExtResource("3_gyxxy")
+volume_db = 5.0
+bus = &"pick"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

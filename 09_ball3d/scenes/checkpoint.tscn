@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://pbi2wjcjvt3o"]
+
+[ext_resource type="Script" uid="uid://cj4671jjg2fe4" path="res://scenes/checkpoint.gd" id="1_ywqth"]
+[ext_resource type="Shader" uid="uid://b261syj71n4mq" path="res://checkpoint.gdshader" id="1_yyywg"]
+[ext_resource type="AudioStream" uid="uid://0qedwk7vssqw" path="res://assets/sounds/check.ogg" id="3_vsimk"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mel2l"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_3cfvr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ijeb4"]
+render_priority = 0
+shader = ExtResource("1_yyywg")
+shader_parameter/bubble_color = Color(0.2, 0.34901962, 1, 1)
+shader_parameter/glow_thickness = 2.0
+shader_parameter/pulse_speed = 5.0
+
+[node name="Area3D" type="Area3D" unique_id=1257017410]
+script = ExtResource("1_ywqth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1730350668]
+shape = SubResource("SphereShape3D_mel2l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=820276723]
+mesh = SubResource("SphereMesh_3cfvr")
+surface_material_override/0 = SubResource("ShaderMaterial_ijeb4")
+
+[node name="check" type="AudioStreamPlayer3D" parent="." unique_id=1113601020]
+stream = ExtResource("3_vsimk")
+volume_db = 5.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

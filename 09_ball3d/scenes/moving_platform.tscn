@@ -1,0 +1,76 @@
+[gd_scene format=4 uid="uid://jjbvck1vqons"]
+
+[ext_resource type="Texture2D" uid="uid://wcuqjt2defrr" path="res://assets/models/blocks_lowpoly-texture.png" id="1_ms375"]
+
+[sub_resource type="GDScript" id="GDScript_mel2l"]
+script/source = "extends AnimatableBody3D
+
+@export var target_offset := Vector3(3, 0, 0)
+@export var duration := 3.0
+
+var start_position: Vector3
+
+func _ready() -> void:
+	start_position = global_position
+	var target_position = start_position + target_offset
+
+	var tween = create_tween().set_loops()
+	
+	tween.tween_property(self, \"global_position\", target_position, duration)\\
+		.set_trans(Tween.TRANS_SINE)\\
+		.set_ease(Tween.EASE_IN_OUT)
+		
+	tween.tween_property(self, \"global_position\", start_position, duration)\\
+		.set_trans(Tween.TRANS_SINE)\\
+		.set_ease(Tween.EASE_IN_OUT)
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5skaa"]
+resource_name = "LowpolyMaterial"
+albedo_texture = ExtResource("1_ms375")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_1tdcd"]
+_surfaces = [{
+"aabb": AABB(-2, -1, -2, 4, 1, 4),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAACAAEAAwAEAAEABQAAAAIAAwAAAAUABAAGAAIABQACAAYAAwAHAAQAAwAFAAcABwAGAAQABwAFAAYA"),
+"name": "LowpolyMaterial",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("AAAAAP//AAAAAP//AAAAAAAA/////wAAAAAAAAAAAAD/////AAAAAP//AAD//wAA////////AAD//wAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_mb26n"]
+resource_name = "blocks_Cube_007"
+_surfaces = [{
+"aabb": AABB(-2, -1, -2, 4, 1, 4),
+"attribute_data": PackedByteArray("7lBjRS1RJEUtUWNF7lAkRe5QJEUtUeVELVEkRe5Q5UTuUOVELVGnRC1R5UTuUKdE7lCnRC1RaEQtUadE7lBoRK9Q5UTuUKdE7lDlRK9Qp0QtUeVEa1GnRGtR5UQtUadE"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_5skaa"),
+"name": "LowpolyMaterial",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAAAAP//VNUAAP//AABU1QAA/////1TVAAAAAAAAVNUAAAAAAAD///////8AAP//AAD//wAA/////wAAAAD/////AAAAAFTV////////VNX/////AABU1f//AAD//1TV//8AAP///78AAP//////v/////////+/AAAAAP///78AAAAAAAD/v///AAD///+///8AAAAA/78AAAAA////v/////8AAP//AAD///////8AAP//AAD/////////////VNVU1VTVVNVU1VTVVNVU1f+//7//v/+//7//v/+//7+qKqoqqiqqKqoqqiqqKqoq/////////////////////wAA/38AAP9/AAD/fwAA/3//f/+//3//v/9//7//f/+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_1tdcd")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_afg43"]
+data = PackedVector3Array(-2, -1, 2, -2, 0, -2, -2, 0, 2, -2, -1, 2, -2, -1, -2, -2, 0, -2, -2, -1, -2, 2, 0, -2, -2, 0, -2, -2, -1, -2, 2, -1, -2, 2, 0, -2, 2, -1, -2, 2, 0, 2, 2, 0, -2, 2, -1, -2, 2, -1, 2, 2, 0, 2, 2, -1, 2, -2, 0, 2, 2, 0, 2, 2, -1, 2, -2, -1, 2, -2, 0, 2, -2, -1, -2, 2, -1, 2, 2, -1, -2, -2, -1, -2, -2, -1, 2, 2, -1, 2, 2, 0, -2, -2, 0, 2, -2, 0, -2, 2, 0, -2, 2, 0, 2, -2, 0, 2)
+
+[node name="moving_platform" type="AnimatableBody3D" unique_id=133513724]
+script = SubResource("GDScript_mel2l")
+
+[node name="floor" type="MeshInstance3D" parent="." unique_id=1530850559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.955086, 3.4968786, 13.940139)
+mesh = SubResource("ArrayMesh_mb26n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=973585124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.955086, 3.4968786, 13.940139)
+shape = SubResource("ConcavePolygonShape3D_afg43")

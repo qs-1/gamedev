@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://d03x58f4qv12" path="res://scenes/ball.tscn" id="2_3n54i"]
 [ext_resource type="Script" uid="uid://bey5ioy3d4ccw" path="res://scripts/death.gd" id="3_nb5j2"]
 [ext_resource type="Script" uid="uid://di02t7ymcmbh3" path="res://scripts/win.gd" id="4_r7wj8"]
+[ext_resource type="PackedScene" uid="uid://mtgxhywyk0sr" path="res://scenes/pickup.tscn" id="5_3n54i"]
 
 [sub_resource type="Environment" id="Environment_t5y7p"]
 
@@ -49,6 +50,10 @@ next_level = "uid://b345cs4swq3gs"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="win" unique_id=1826393051]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.99585, -1.2057676, -1.9838605)
 shape = SubResource("BoxShape3D_mel2l")
+
+[node name="Area3D" parent="." unique_id=1136219258 instance=ExtResource("5_3n54i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.606167, 0.54371977, -1.9712057)
+points = 20
 
 [connection signal="body_entered" from="death" to="death" method="_on_body_entered"]
 [connection signal="body_entered" from="win" to="win" method="_on_body_entered"]

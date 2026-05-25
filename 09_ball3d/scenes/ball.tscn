@@ -3,6 +3,9 @@
 [ext_resource type="ArrayMesh" uid="uid://bha5spb6k8t1e" path="res://assets/models/pixar-ball.obj" id="1_41u45"]
 [ext_resource type="Script" uid="uid://cwn4116jfw2je" path="res://scripts/ball.gd" id="1_ktgx5"]
 [ext_resource type="Texture2D" uid="uid://6rcuvghxilxj" path="res://assets/textures/pixar-ball.png" id="2_ktgx5"]
+[ext_resource type="AudioStream" uid="uid://bb65fi65mwo1t" path="res://assets/sounds/jump..wav" id="4_4dx81"]
+[ext_resource type="AudioStream" uid="uid://85jolajs621v" path="res://assets/sounds/ded.ogg" id="5_eew57"]
+[ext_resource type="AudioStream" uid="uid://cqpr43j2ncmao" path="res://assets/sounds/win.wav" id="6_jj7gd"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ktgx5"]
 bounce = 0.3
@@ -36,3 +39,15 @@ current = true
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=162297624]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9324945, 0)
 target_position = Vector3(0, -1.515, 0)
+
+[node name="jump" type="AudioStreamPlayer3D" parent="." unique_id=126526158]
+stream = ExtResource("4_4dx81")
+
+[node name="ded" type="AudioStreamPlayer3D" parent="." unique_id=853126084]
+stream = ExtResource("5_eew57")
+volume_db = 5.0
+
+[node name="win" type="AudioStreamPlayer3D" parent="." unique_id=1671145013]
+stream = ExtResource("6_jj7gd")
+bus = &"win"
+emission_angle_enabled = true
