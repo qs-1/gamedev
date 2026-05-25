@@ -15,8 +15,6 @@ func _on_body_entered(body: Node3D) -> void:
 		var tween = create_tween()
 		tween.tween_method(func(a): mat.set_shader_parameter("alpha", a), 1.0, 0.0, 1)
 		await tween.finished
-		
-		# In case the sound is longer than the visual fade, wait for it too
 		if $pickup.playing:
 			await $pickup.finished
 			

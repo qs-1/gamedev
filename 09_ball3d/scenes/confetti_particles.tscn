@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://b1d2e3f4g5h6j"]
+
+[ext_resource type="Script" uid="uid://e4confettiscr" path="res://scripts/confetti_particles.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://e4confettitex" path="res://assets/textures/confetti.png" id="2_texture"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_confetti"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Curve" id="Curve_alpha"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_alpha"]
+curve = SubResource("Curve_alpha")
+
+[sub_resource type="Gradient" id="Gradient_color"]
+offsets = PackedFloat32Array(0, 0.25, 0.26, 0.5, 0.51, 0.75, 0.76, 1)
+colors = PackedColorArray(0.9, 0.1, 0.4, 1, 0.9, 0.1, 0.4, 1, 0.1, 0.8, 0.8, 1, 0.1, 0.8, 0.8, 1, 0.9, 0.8, 0.1, 1, 0.9, 0.8, 0.1, 1, 0.2, 0.8, 0.2, 1, 0.2, 0.8, 0.2, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_color"]
+gradient = SubResource("Gradient_color")
+
+[sub_resource type="Curve" id="Curve_damping"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.2, 0.3), 0.0, 0.0, 0, 0, Vector2(0.7, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_damping"]
+curve = SubResource("Curve_damping")
+
+[sub_resource type="Curve" id="Curve_scale"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.8, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_scale"]
+curve = SubResource("Curve_scale")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_confetti"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 50.0
+initial_velocity_min = 180.0
+initial_velocity_max = 240.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+gravity = Vector3(0, 150, 0)
+linear_accel_min = 10.0
+linear_accel_max = 30.0
+damping_min = 74.0
+damping_max = 78.0
+damping_curve = SubResource("CurveTexture_damping")
+scale_min = 0.8
+scale_max = 1.4
+scale_curve = SubResource("CurveTexture_scale")
+color_initial_ramp = SubResource("GradientTexture1D_color")
+hue_variation_min = -0.02
+hue_variation_max = 0.02
+alpha_curve = SubResource("CurveTexture_alpha")
+anim_speed_min = 2.0
+anim_speed_max = 5.0
+anim_offset_min = 0.0
+anim_offset_max = 1.0
+
+[node name="ConfettiParticles" type="GPUParticles2D"]
+material = SubResource("CanvasItemMaterial_confetti")
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_confetti")
+texture = ExtResource("2_texture")
+lifetime = 4.0
+one_shot = true
+explosiveness = 0.97
+script = ExtResource("1_script")

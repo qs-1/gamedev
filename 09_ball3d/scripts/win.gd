@@ -36,6 +36,7 @@ func _on_body_entered(body: Node3D) -> void:
 			
 			var tween = create_tween().set_parallel(true)
 			win_ui.visible = true
+			Hud.play_shower()
 			
 			tween.tween_property(overlay, "modulate:a", 0.5, 2)
 			tween.tween_property(labels, "modulate:a", 1.0, 2)
