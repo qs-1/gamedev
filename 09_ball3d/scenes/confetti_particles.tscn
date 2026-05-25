@@ -21,6 +21,10 @@ point_count = 3
 offsets = PackedFloat32Array(0, 0.7, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
+[sub_resource type="Curve" id="Curve_hue"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [node name="ConfettiParticles" type="CPUParticles2D"]
 material = SubResource("CanvasItemMaterial_confetti")
 amount = 60
@@ -43,10 +47,8 @@ damping_curve = SubResource("Curve_damping")
 scale_amount_min = 0.8
 scale_amount_max = 1.4
 scale_amount_curve = SubResource("Curve_scale")
-color = Color(0.95, 0.25, 0.25, 1)
+color = Color(1, 1, 1, 1)
 color_ramp = SubResource("Gradient_alpha")
-hue_variation_min = -1.0
-hue_variation_max = 1.0
 anim_speed_min = 2.0
 anim_speed_max = 5.0
 anim_offset_min = 0.0

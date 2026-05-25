@@ -85,7 +85,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.051392, 4.498951, 25.6383
 points = 10
 
 [node name="win_ui" type="CanvasLayer" parent="." unique_id=1998357755]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="win_ui" unique_id=1741433010]
 anchors_preset = 15

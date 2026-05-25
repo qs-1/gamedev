@@ -21,7 +21,7 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and not win:
 		camera_rig.rotate_y(-event.relative.x * mouse_sensitivity)
-	if event is InputEventMouseButton and event.pressed and not win:
+	if (event is InputEventMouseButton or event is InputEventKey) and event.pressed and not win:
 		if not mouse_cap:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			mouse_cap = true
