@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://c1r8ruracrgpw" path="res://scripts/speed.gd" id="1_7wd3c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3cfvr"]
-size = Vector3(7.8044434, 0.73046875, 3.9715576)
+size = Vector3(5.347412, 0.73046875, 3.9715576)
 
 [sub_resource type="BoxMesh" id="BoxMesh_lxoxb"]
-size = Vector3(7.741211, 0.3054204, 3.6044922)
+size = Vector3(5.2558594, 0.3054204, 3.6044922)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_udj8g"]
 albedo_color = Color(1, 0.85882354, 0.54509807, 1)

@@ -14,6 +14,10 @@ config/name="3d-ball"
 run/main_scene="uid://cd1mifrqhteub"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
+[audio]
+
+buses/default_bus_layout="uid://1upu02lekok3"
+
 [autoload]
 
 GameManager="*uid://or7jge4b5bbi"

@@ -1,16 +1,23 @@
 [gd_scene format=3 uid="uid://mtgxhywyk0sr"]
 
 [ext_resource type="Script" uid="uid://bwkcfpsygpw1p" path="res://scripts/pickup.gd" id="1_7cqbe"]
-[ext_resource type="Texture2D" uid="uid://dvm0venebl73t" path="res://assets/textures/lowpoly-texture.png" id="1_pg2rt"]
+[ext_resource type="Shader" uid="uid://cr2yx7h6d3sm8" path="res://pickup.gdshader" id="2_gyxxy"]
 [ext_resource type="AudioStream" uid="uid://culb5itf453ra" path="res://assets/sounds/pickup.ogg" id="3_gyxxy"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_3cfvr"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lxoxb"]
-albedo_texture = ExtResource("1_pg2rt")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rmo5g"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_gyxxy")
+shader_parameter/cool_color = Color(0.4, 0, 0.8, 1)
+shader_parameter/hot_color = Color(1, 0.4, 0, 1)
+shader_parameter/flow_speed = 0.8
+shader_parameter/scale = 4.0
+shader_parameter/alpha = 1.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_mel2l"]
-material = SubResource("StandardMaterial3D_lxoxb")
+material = SubResource("ShaderMaterial_rmo5g")
 
 [node name="Area3D" type="Area3D" unique_id=1136219258]
 script = ExtResource("1_7cqbe")

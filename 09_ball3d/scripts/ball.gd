@@ -6,9 +6,11 @@ extends RigidBody3D
 @export var mouse_sensitivity: float = 0.002
 
 @onready var camera_rig: Node3D = $camrig
+@onready var camera: Node3D = $camrig/Camera3D
 @onready var floor_check: RayCast3D = $RayCast3D
 
 var mouse_cap = false
+var win = false
 
 func _ready() -> void:
 	camera_rig.set_as_top_level(true)
@@ -17,7 +19,7 @@ func _ready() -> void:
 	mouse_cap = true
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and not win:
 		camera_rig.rotate_y(-event.relative.x * mouse_sensitivity)
 	if event.is_action_pressed("ui_cancel"):
 		if mouse_cap:
@@ -28,6 +30,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			mouse_cap = true
 
 func _physics_process(delta: float) -> void:
+	if win:
+		camera_rig.rotate_y(0.01)
+		camera.position = camera.position.lerp(Vector3(0, 6, 8), 1 * delta)
+		return
+	
 	# Step 1: Ask the camera rig "where is forward / right?"
 	var cam_forward: Vector3 = -camera_rig.global_basis.z
 	cam_forward.y = 0.0

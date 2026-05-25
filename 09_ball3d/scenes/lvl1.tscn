@@ -6,14 +6,41 @@
 [ext_resource type="Script" uid="uid://bey5ioy3d4ccw" path="res://scripts/death.gd" id="3_6j3wd"]
 [ext_resource type="Script" uid="uid://di02t7ymcmbh3" path="res://scripts/win.gd" id="4_hp87r"]
 [ext_resource type="PackedScene" uid="uid://mtgxhywyk0sr" path="res://scenes/pickup.tscn" id="5_g83ud"]
+[ext_resource type="FontFile" uid="uid://csmylnv4k86os" path="res://assets/consola.ttf" id="8_u7exc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g28q7"]
+sky_top_color = Color(0.101960786, 0.10980392, 0.18039216, 1)
+sky_horizon_color = Color(0.8784314, 0.3764706, 0.21960784, 1)
+ground_horizon_color = Color(0.7490196, 0.3372549, 0.2627451, 1)
+
+[sub_resource type="Sky" id="Sky_j3pel"]
+sky_material = SubResource("ProceduralSkyMaterial_g28q7")
 
 [sub_resource type="Environment" id="Environment_t5y7p"]
+background_mode = 2
+sky = SubResource("Sky_j3pel")
+tonemap_mode = 3
+ssao_enabled = true
+glow_enabled = true
+glow_intensity = 1.0
+glow_bloom = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t5y7p"]
 size = Vector3(335.43848, 120.998535, 249.64453)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mel2l"]
 size = Vector3(2.8462524, 1.4031677, 2.8569336)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6j3wd"]
+font = ExtResource("8_u7exc")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_mel2l"]
+font = ExtResource("8_u7exc")
+
+[sub_resource type="LabelSettings" id="LabelSettings_3cfvr"]
+font = ExtResource("8_u7exc")
+font_size = 20
 
 [node name="lvl1" type="Node3D" unique_id=959289986]
 script = ExtResource("1_6j3wd")
@@ -27,14 +54,14 @@ data = {
 }
 
 [node name="ball" parent="." unique_id=2115016708 instance=ExtResource("2_g83ud")]
-transform = Transform3D(-0.5938512, 0, 0.80457497, 0, 1, 0, -0.80457497, 0, -0.5938512, 1, 1, -5)
+transform = Transform3D(-0.25348464, 0, 0.9673395, 0, 1, 0, -0.9673395, 0, -0.25348464, 1, 1, -5)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=18427323]
 environment = SubResource("Environment_t5y7p")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=35958589]
-transform = Transform3D(0.8660254, 0.38302222, -0.32139382, 0, 0.64278764, 0.76604444, 0.5, -0.66341394, 0.5566704, 0, 11.225, 0)
-light_color = Color(1, 1, 0.80784315, 1)
+transform = Transform3D(0.48472822, -0.20677575, 0.849872, -0.042133097, 0.9650067, 0.25881907, -0.8736496, -0.16126457, 0.45905387, 0, 11.225, 0)
+light_color = Color(1, 0.72156864, 0.54901963, 1)
 shadow_enabled = true
 
 [node name="death" type="Area3D" parent="." unique_id=1417602815]
@@ -54,8 +81,74 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.993316, -1.4514589, 37.973
 shape = SubResource("BoxShape3D_mel2l")
 
 [node name="Area3D" parent="." unique_id=1136219258 instance=ExtResource("5_g83ud")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.051392, 4.860718, 25.535461)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.051392, 4.498951, 25.638334)
 points = 10
+
+[node name="win_ui" type="CanvasLayer" parent="." unique_id=1998357755]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="win_ui" unique_id=1741433010]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="labels" type="Control" parent="win_ui" unique_id=278941797]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="lvl_win" type="Label" parent="win_ui/labels" unique_id=978560326]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 468.0
+offset_top = 262.5
+offset_right = 644.0
+offset_bottom = 311.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Level Won!"
+label_settings = SubResource("LabelSettings_6j3wd")
+
+[node name="score" type="Label" parent="win_ui/labels" unique_id=983379215]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 459.0
+offset_top = 315.5
+offset_right = 653.0
+offset_bottom = 338.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Score: 0 | Time: 00:00"
+label_settings = SubResource("LabelSettings_mel2l")
+
+[node name="tip" type="Label" parent="win_ui/labels" unique_id=1240423648]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 429.5
+offset_top = 400.5
+offset_right = 682.5
+offset_bottom = 423.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press space to continue"
+label_settings = SubResource("LabelSettings_3cfvr")
 
 [connection signal="body_entered" from="death" to="death" method="_on_body_entered"]
 [connection signal="body_entered" from="win" to="win" method="_on_body_entered"]

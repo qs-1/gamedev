@@ -15,5 +15,5 @@ func _on_body_entered(body: Node3D) -> void:
 	if body.name == "ball" and get_parent().spawn_pos != position:
 		$check.play()
 		var mat = $MeshInstance3D.get_active_material(0)
-		mat.set_shader_parameter("bubble_color", Color(0.0, 0.769, 0.043, 1.0))
+		mat.set_shader_parameter("bubble_color", Color(0.263, 0.373, 0.212, 1.0))
 		get_parent().spawn_pos = position

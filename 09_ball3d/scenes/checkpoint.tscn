@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://pbi2wjcjvt3o"]
 
-[ext_resource type="Script" uid="uid://cj4671jjg2fe4" path="res://scenes/checkpoint.gd" id="1_ywqth"]
+[ext_resource type="Script" uid="uid://cj4671jjg2fe4" path="res://scripts/checkpoint.gd" id="1_ywqth"]
 [ext_resource type="Shader" uid="uid://b261syj71n4mq" path="res://checkpoint.gdshader" id="1_yyywg"]
 [ext_resource type="AudioStream" uid="uid://0qedwk7vssqw" path="res://assets/sounds/check.ogg" id="3_vsimk"]
 

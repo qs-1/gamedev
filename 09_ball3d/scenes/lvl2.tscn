@@ -1,12 +1,15 @@
 [gd_scene format=3 uid="uid://b0ugcs46h5e0t"]
 
 [ext_resource type="MeshLibrary" uid="uid://bbrstvbibrcq" path="res://assets/models/blocks.meshlib" id="1_jaojv"]
+[ext_resource type="Script" uid="uid://5agvqwq8v7do" path="res://scripts/lvl_2.gd" id="1_lvl2_script"]
 [ext_resource type="PackedScene" uid="uid://d03x58f4qv12" path="res://scenes/ball.tscn" id="2_3n54i"]
 [ext_resource type="Script" uid="uid://bey5ioy3d4ccw" path="res://scripts/death.gd" id="3_nb5j2"]
 [ext_resource type="Script" uid="uid://di02t7ymcmbh3" path="res://scripts/win.gd" id="4_r7wj8"]
 [ext_resource type="PackedScene" uid="uid://mtgxhywyk0sr" path="res://scenes/pickup.tscn" id="5_3n54i"]
+[ext_resource type="FontFile" uid="uid://csmylnv4k86os" path="res://assets/consola.ttf" id="7_r7wj8"]
 
 [sub_resource type="Environment" id="Environment_t5y7p"]
+ssao_enabled = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t5y7p"]
 size = Vector3(335.43848, 120.998535, 249.64453)
@@ -14,7 +17,19 @@ size = Vector3(335.43848, 120.998535, 249.64453)
 [sub_resource type="BoxShape3D" id="BoxShape3D_mel2l"]
 size = Vector3(2.8462524, 1.4031677, 2.8569336)
 
+[sub_resource type="LabelSettings" id="LabelSettings_g6uqv"]
+font = ExtResource("7_r7wj8")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_hnnuc"]
+font = ExtResource("7_r7wj8")
+
+[sub_resource type="LabelSettings" id="LabelSettings_c8sub"]
+font = ExtResource("7_r7wj8")
+font_size = 20
+
 [node name="lvl2" type="Node3D" unique_id=959289986]
+script = ExtResource("1_lvl2_script")
 
 [node name="GridMap" type="GridMap" parent="." unique_id=2016823752]
 mesh_library = ExtResource("1_jaojv")
@@ -54,6 +69,72 @@ shape = SubResource("BoxShape3D_mel2l")
 [node name="Area3D" parent="." unique_id=1136219258 instance=ExtResource("5_3n54i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.606167, 0.54371977, -1.9712057)
 points = 20
+
+[node name="win_ui" type="CanvasLayer" parent="." unique_id=1360369447]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="win_ui" unique_id=1801765037]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="labels" type="Control" parent="win_ui" unique_id=113898204]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="lvl_win" type="Label" parent="win_ui/labels" unique_id=1454821647]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 468.0
+offset_top = 262.5
+offset_right = 644.0
+offset_bottom = 311.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Level Won!"
+label_settings = SubResource("LabelSettings_g6uqv")
+
+[node name="score" type="Label" parent="win_ui/labels" unique_id=516823831]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 459.0
+offset_top = 315.5
+offset_right = 653.0
+offset_bottom = 338.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Score: 0 | Time: 00:00"
+label_settings = SubResource("LabelSettings_hnnuc")
+
+[node name="tip" type="Label" parent="win_ui/labels" unique_id=857542690]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 429.5
+offset_top = 400.5
+offset_right = 682.5
+offset_bottom = 423.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press space to continue"
+label_settings = SubResource("LabelSettings_c8sub")
 
 [connection signal="body_entered" from="death" to="death" method="_on_body_entered"]
 [connection signal="body_entered" from="win" to="win" method="_on_body_entered"]
