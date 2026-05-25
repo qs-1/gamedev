@@ -20,9 +20,8 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("ball") or body.name == "ball":
-		body.get_node("win").play()
-		
 		if not body.win: 
+			body.get_node("win").play()
 			is_won = true
 			GameManager.timer_running = false
 			var mins = int(GameManager.elapsed_time / 60)

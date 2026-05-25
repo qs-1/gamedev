@@ -95,60 +95,37 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.39215687)
 
-[node name="labels" type="Control" parent="win_ui" unique_id=278941797]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="labels" type="VBoxContainer" parent="win_ui" unique_id=278941797]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -100.0
+offset_right = 300.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
 
 [node name="lvl_win" type="Label" parent="win_ui/labels" unique_id=978560326]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 468.0
-offset_top = 262.5
-offset_right = 644.0
-offset_bottom = 311.5
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
+layout_mode = 2
 text = "Level Won!"
 label_settings = SubResource("LabelSettings_6j3wd")
+horizontal_alignment = 1
 
 [node name="score" type="Label" parent="win_ui/labels" unique_id=983379215]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 459.0
-offset_top = 315.5
-offset_right = 653.0
-offset_bottom = 338.5
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 text = "Score: 0 | Time: 00:00"
 label_settings = SubResource("LabelSettings_mel2l")
+horizontal_alignment = 1
 
 [node name="tip" type="Label" parent="win_ui/labels" unique_id=1240423648]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 429.5
-offset_top = 400.5
-offset_right = 682.5
-offset_bottom = 423.5
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 text = "Press space to continue"
 label_settings = SubResource("LabelSettings_3cfvr")
+horizontal_alignment = 1
 
 [connection signal="body_entered" from="death" to="death" method="_on_body_entered"]
 [connection signal="body_entered" from="win" to="win" method="_on_body_entered"]
