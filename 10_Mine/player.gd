@@ -19,26 +19,22 @@ var hunger = 100.0
 var sprint = 10.0
 var is_exhausted: bool = false
 var spawn_position: Vector3
-
-
-
-
-
-
-
 var noise: FastNoiseLite
+
 func setup_terrain() -> void:
 	noise = FastNoiseLite.new()
-	noise.fractal_type = FastNoiseLite.FRACTAL_FBM
-	noise.fractal_octaves = 3
 	noise.seed = randi()
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
-	noise.frequency = 0.02
+	noise.frequency = 0.015
+	noise.fractal_type = FastNoiseLite.FRACTAL_FBM
+	noise.fractal_octaves = 3
+	noise.fractal_lacunarity = 1.5
+	noise.fractal_gain = 0.4
 	
 	for x in range(-64, 64):
 		for z in range(-64, 64):
 			var noise_val = noise.get_noise_2d(x, z)
-			var target_y = int((noise_val + 1.0) * 4.0)
+			var target_y = int((noise_val + 1.0) * 3.0)
 			
 			for y in range(0, target_y):
 				var block_id = 2
@@ -56,13 +52,29 @@ func setup_terrain() -> void:
 
 
 
-
-
 func _ready() -> void:
 	spawn_position = global_position
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0.5)
+	style.content_margin_left = 20
+	style.content_margin_top = 10
+	style.content_margin_right = 10
+	style.content_margin_bottom = 10
+	$UI/blocks.add_theme_stylebox_override("normal", style)
+	
 	update_labels()
 	setup_terrain()
+	
+	$UI/tip.modulate.a = 0.0
+	var tween = create_tween()
+	tween.tween_property($UI/tip, "modulate:a", 1.0, 0.25)
+	tween.tween_interval(2.0)
+	tween.tween_property($UI/tip, "modulate:a", 0.0, 0.25)
+
+
+
 
 func respawn() -> void:
 	global_position = spawn_position
@@ -73,12 +85,6 @@ func respawn() -> void:
 	update_labels()
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
 	if not is_on_floor():
 		velocity += get_gravity() * 2 * delta
 
@@ -95,10 +101,10 @@ func _physics_process(delta: float) -> void:
 		is_exhausted = false
 
 	if Input.is_action_pressed("sprint") and not is_exhausted and direction != Vector3.ZERO:
-		sprint -= delta * 1.0
+		sprint -= delta * 0.5
 		CURR_SPEED = SPRINT_SPEED
 	else:
-		sprint += delta * 3
+		sprint += delta * 3.0
 		CURR_SPEED = DEFAULT_SPEED
 	
 	sprint = clamp(sprint, 0.0, 10.0)
@@ -110,7 +116,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, CURR_SPEED)
 		velocity.z = move_toward(velocity.z, 0, CURR_SPEED)
 
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if raycast.is_colliding():
 			var curr_col = raycast.get_collider()
 			if curr_col is GridMap:
@@ -143,22 +149,29 @@ func _physics_process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		rotate_y(-event.relative.x * sens)
-		cam.rotate_x(-event.relative.y * sens)
-		cam.rotation.x = clamp(cam.rotation.x, -PI/2, PI/2)
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			rotate_y(-event.relative.x * sens)
+			cam.rotate_x(-event.relative.y * sens)
+			cam.rotation.x = clamp(cam.rotation.x, -PI/2, PI/2)
 		
 	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_C:
+			if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			else:
+				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
 		for i in range(7):
 			if event.keycode == KEY_1 + i:
 				index = i
 				update_labels()
 				break_timer.stop()
 
-	if event is InputEventKey and event.keycode == KEY_E and event.pressed:
-		if index == 6 and amount[index] > 0:
-			amount[index] -= 1
-			hunger = min(hunger + 20.0, 100.0)
-			update_labels()
+		if event.keycode == KEY_E:
+			if index == 6 and amount[index] > 0:
+				amount[index] -= 1
+				hunger = min(hunger + 20.0, 100.0)
+				update_labels()
 
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
@@ -171,7 +184,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			break_timer.stop()
 
 func update_labels():
-	var text_ui = "[color=lightcoral]HEALTH:[/color] " + str(int(health)) + "  |  [color=khaki]HUNGER:[/color] " + str(int(hunger)) + "  |  [color=lightskyblue]STAMINA:[/color] " + str(int(sprint * 10)) + "\n\n"
+	var text_ui = "[color=lightcoral]HEALTH:[/color] " + str(int(health)) + "  |  [color=khaki]HUNGER:[/color] " + str(int(hunger)) + "  |  [color=lightskyblue]STAMINA:[/color] " + str(int(sprint * 10)) + "\n"
 	for i in range(blocks.size()):
 		if i == index:
 			text_ui += "[b][color=white]> " + blocks[i] + " : " + str(amount[i]) + " <[/color][/b]   "
@@ -184,15 +197,16 @@ func pos_to_grid(p):
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
-		if raycast.is_colliding():
-			var hit_point = raycast.get_collision_point()
-			var normal = raycast.get_collision_normal()
-			if event.button_index == MOUSE_BUTTON_RIGHT:
-				var place_pos = hit_point + (normal * 0.1)
-				if amount[index] > 0:
-					gridmap.set_cell_item(pos_to_grid(place_pos), index)
-					amount[index] -= 1
-					update_labels()
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			if raycast.is_colliding():
+				var hit_point = raycast.get_collision_point()
+				var normal = raycast.get_collision_normal()
+				if event.button_index == MOUSE_BUTTON_RIGHT:
+					var place_pos = hit_point + (normal * 0.1)
+					if amount[index] > 0:
+						gridmap.set_cell_item(pos_to_grid(place_pos), index)
+						amount[index] -= 1
+						update_labels()
 
 func _on_break_timer_timeout() -> void:
 	if collider and collider is GridMap:

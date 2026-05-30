@@ -342,14 +342,8 @@ foreach ($projectDir in $targetProjects) {
         if ($userInputTitle) {
             $projectTitle = $userInputTitle
         }
-        
-        $userInputSlug = Read-Host "URL Folder Name (lowercase, no spaces) [Default: '$deployName']"
-        $userInputSlug = $userInputSlug.Trim().ToLower()
-        if ($userInputSlug) {
-            $deployName = $userInputSlug
-        }
-        
-        $portfolioResponse = Read-Host "Add this game to the main portfolio index.html list? (y/n) [Default: y]"
+
+        $portfolioResponse = Read-Host "Add this game to the portfolio? (y/n) [Default: y]"
         if ($portfolioResponse.Trim().ToLower() -eq 'n') {
             $addToPortfolio = $false
         }
@@ -521,48 +515,21 @@ if (Test-Path (Join-Path $gitDir ".git")) {
         Write-Info "Uncommitted changes detected in gh-pages worktree:"
         Write-Host $changes -ForegroundColor Gray
         
-        Write-Host ""
-        $response = "y"
-        if (-not $Auto) {
-            $response = Read-Host "Do you want to commit these changes to deploy? (y/n) [Default: y]"
+        # Auto-commit with generated message
+        $defaultMsg = "deploy: automated Godot project export"
+        if ($exportedTitles.Count -gt 0) {
+            $defaultMsg = "deploy: export " + ($exportedTitles -join ", ")
         }
-        if ($response.Trim().ToLower() -ne 'n') {
-            # Construct a dynamic default commit message based on exported games
-            $defaultMsg = "deploy: automated Godot project export"
-            if ($exportedTitles.Count -gt 0) {
-                $defaultMsg = "deploy: export " + ($exportedTitles -join ", ")
-            }
-            
-            $commitMsg = ""
-            if (-not $Auto) {
-                $commitMsg = Read-Host "Enter deployment commit message [Default: '$defaultMsg']"
-                $commitMsg = $commitMsg.Trim()
-            }
-            if (-not $commitMsg) {
-                $commitMsg = $defaultMsg
-            }
-            
-            Write-Info "Adding and committing changes..."
-            git -C $gitDir add -A
-            git -C $gitDir commit -m $commitMsg
-            
-            $pushResponse = "y"
-            if (-not $Auto) {
-                $pushResponse = Read-Host "Push to GitHub Pages now? (y/n) [Default: y]"
-            }
-            if ($pushResponse.Trim().ToLower() -ne 'n') {
-                Write-Info "Pushing to remote repository..."
-                git -C $gitDir push origin HEAD:gh-pages
-                if ($LASTEXITCODE -ne 0) {
-                    Write-ErrorLog "Failed to push changes to remote repository! (Exit code: $LASTEXITCODE)"
-                } else {
-                    Write-Success "Deployment pushed and completed!"
-                }
-            } else {
-                Write-Info "Skipping push. Changes committed locally."
-            }
+        Write-Info "Committing: $defaultMsg"
+        git -C $gitDir add -A
+        git -C $gitDir commit -m $defaultMsg
+
+        Write-Info "Pushing to GitHub Pages..."
+        git -C $gitDir push origin HEAD:gh-pages
+        if ($LASTEXITCODE -ne 0) {
+            Write-ErrorLog "Failed to push to remote! (Exit code: $LASTEXITCODE)"
         } else {
-            Write-Info "Skipping git commit/push. Build completed locally."
+            Write-Success "Deployed and pushed to GitHub Pages!"
         }
     } else {
         Write-Success "No changes in gh-pages worktree. Everything up to date!"
