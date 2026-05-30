@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://ckudr8chj1kgo"]
+
+[ext_resource type="Script" uid="uid://b0gd8hrqpvtbb" path="res://player.gd" id="1_4flbx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3vyb7"]
+radius = 0.8
+height = 4.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g2els"]
+radius = 0.8
+height = 4.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_4flbx"]
+font_size = 20
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=459040246]
+script = ExtResource("1_4flbx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2066904103]
+shape = SubResource("CapsuleShape3D_3vyb7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=409818477]
+mesh = SubResource("CapsuleMesh_g2els")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1587154814]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.709387, 0)
+omni_range = 38.811077
+omni_attenuation = 0.14
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2105389615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86833, -0.53633606)
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=521368491]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+target_position = Vector3(0, -8, 0)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=238663825]
+
+[node name="cross" type="Label" parent="UI" unique_id=558525682]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "+"
+label_settings = SubResource("LabelSettings_4flbx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="blocks" type="RichTextLabel" parent="UI" unique_id=419687136]
+anchors_preset = -1
+anchor_left = 0.347
+anchor_top = 0.87700003
+anchor_right = 0.347
+anchor_bottom = 0.87700003
+offset_left = -376.74402
+offset_top = -30.29602
+offset_right = 376.25598
+offset_bottom = 61.70398
+bbcode_enabled = true
+
+[node name="BreakTimer" type="Timer" parent="." unique_id=599091979]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="BreakTimer" to="." method="_on_break_timer_timeout"]

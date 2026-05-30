@@ -442,89 +442,77 @@ progressive_web_app/enabled=false
 
     $exportedTitles += $projectTitle
 
-    # D. Update gh-pages/index.html portfolio page
+    # D. Update portfolio source data and rebuild the React/shadcn index page
     if ($addToPortfolio) {
-        $portfolioPath = Join-Path $PSScriptRoot "gh-pages\index.html"
-        if (Test-Path $portfolioPath) {
-            Write-Info "Registering game in portfolio index.html..."
-            
-            $numberPrefix = ""
-            if ($dirName -match '^(\d+)') {
-                $numberPrefix = $Matches[1]
-            } else {
-                $numberPrefix = "99"
-            }
-            $intNumber = [int]$numberPrefix
-            
-            $htmlContent = [System.IO.File]::ReadAllText($portfolioPath)
-            
-            # Check if already registered
-            if ($htmlContent -match "href=`"$deployName/index.html`"") {
-                Write-Info "Game is already registered in portfolio index.html."
-            } else {
-                # Construct the beautiful link markup matching existing portfolio style
-                $newLink = "            <a class=`"project-link`" href=`"$deployName/index.html`">`r`n" +
-                           "                <span>$numberPrefix.</span>Assignment ${intNumber}: $projectTitle`r`n" +
-                           "            </a>"
-
-                # Parse and insert into the HTML
-                # We want to find the <div class="project-list">...</div> block
-                # We'll insert our new link inside it, sorted numerically
-                $listRegex = "(?s)(<div class=`"project-list`"\s*>)(.*?)(</div>)"
-                if ($htmlContent -match $listRegex) {
-                    $listStart = $Matches[1]
-                    $listInner = $Matches[2]
-                    $listEnd = $Matches[3]
-
-                    # Extract all existing links
-                    $existingLinks = @()
-                    $linkPattern = "(?s)<a class=`"project-link`"[^>]*>.*?</a>"
-                    $matches = [regex]::Matches($listInner, $linkPattern)
-                    foreach ($m in $matches) {
-                        $existingLinks += $m.Value.Trim()
-                    }
-
-                    # Add our new link
-                    $existingLinks += $newLink.Trim()
-
-                    # Sort links numerically based on <span>XX.</span>
-                    $sortedLinks = $existingLinks | Sort-Object {
-                        if ($_ -match '<span>(\d+)\.</span>') {
-                            [int]$Matches[1]
-                        } else {
-                            999
-                        }
-                    }
-
-                    # Join links back with proper formatting and indent
-                    $newInner = "`r`n"
-                    foreach ($link in $sortedLinks) {
-                        $newInner += "            " + $link + "`r`n"
-                    }
-                    $newInner += "        "
-
-                    # Reconstruct full HTML
-                    # Find the index where the matched pattern is
-                    $matchedFull = [regex]::Match($htmlContent, $listRegex).Value
-                    $replacement = $listStart + $newInner + $listEnd
-                    $htmlContent = $htmlContent.Replace($matchedFull, $replacement)
-
-                    [System.IO.File]::WriteAllText($portfolioPath, $htmlContent)
-                    Write-Success "Registered in portfolio index.html!"
-                } else {
-                    Write-Warning "Could not parse project list in portfolio index.html!"
-                }
-            }
+        $gamesDataPath = Join-Path $PSScriptRoot "portfolio-src\src\data\games.ts"
+        if (-not (Test-Path $gamesDataPath)) {
+            Write-Warning "portfolio-src\src\data\games.ts not found - skipping portfolio update."
         } else {
-            Write-Warning "Portfolio index.html not found at $portfolioPath!"
+            $numberPrefix = "99"
+            if ($dirName -match '^(\d+)') { $numberPrefix = $Matches[1] }
+            $intNumber = [int]$numberPrefix
+
+            # Build a short one-line description based on the title
+            $descriptionMap = @{
+                "Wanderer"       = "Top-down exploration with smooth tile-based movement."
+                "Ricochet"       = "Bounce projectiles off walls to hit targets."
+                "Fruit Frenzy"   = "Catch falling fruit before it hits the ground."
+                "Ping Pong"      = "Classic two-paddle pong with velocity-based physics."
+                "Flappy Bird"    = "Navigate through gaps - simple input, brutal difficulty."
+                "Breakout"       = "Destroy all bricks with a bouncing ball and paddle."
+                "Cookie Clicker" = "Idle clicking game with upgrades and passive income."
+                "Pop a Balloon"  = "Pop balloons as fast as you can before time runs out."
+                "3D Ball"        = "Roll a ball through a 3D environment."
+            }
+            $description = $descriptionMap[$projectTitle]
+            if (-not $description) { $description = "Assignment $intNumber game." }
+
+            $gamesContent = [System.IO.File]::ReadAllText($gamesDataPath)
+
+            # Check if this game is already in games.ts
+            $hrefPattern = 'href: "' + $deployName + '/index.html"'
+            if ($gamesContent -match [regex]::Escape($hrefPattern)) {
+                Write-Info "Game '$projectTitle' already in games.ts - skipping."
+            } else {
+                Write-Info "Adding '$projectTitle' to games.ts..."
+
+                # Build the new entry using string concatenation to avoid here-string quoting issues
+                $q = '"'
+                $newEntry  = "`n  {`n"
+                $newEntry += "    number: $intNumber,`n"
+                $newEntry += "    title: $q$projectTitle$q,`n"
+                $newEntry += "    description: $q$description$q,`n"
+                $newEntry += "    href: $q$deployName/index.html$q,`n"
+                $newEntry += '    tags: ["2D"],' + "`n"
+                $newEntry += "  },"
+
+                # Insert the new entry before the closing ]; of the games array (on its own line)
+                $gamesContent = $gamesContent -replace '(?m)^(\];)', ($newEntry + "`n" + '$1')
+                [System.IO.File]::WriteAllText($gamesDataPath, $gamesContent)
+                Write-Success "Added '$projectTitle' to games.ts!"
+            }
+
+            # Rebuild the portfolio React app
+            Write-Info "Rebuilding portfolio (npm run build)..."
+            $portfolioSrcPath = Join-Path $PSScriptRoot "portfolio-src"
+            $buildProcess = Start-Process -FilePath "cmd.exe" -ArgumentList "/c", "npm run build" -WorkingDirectory $portfolioSrcPath -NoNewWindow -Wait -PassThru
+            if ($buildProcess.ExitCode -ne 0) {
+                Write-ErrorLog "Portfolio build failed! Check portfolio-src for errors."
+            } else {
+                # Copy fresh build output to gh-pages root
+                $distPath = Join-Path $portfolioSrcPath "dist\*"
+                $ghPagesPath = Join-Path $PSScriptRoot "gh-pages"
+                Copy-Item -Path $distPath -Destination $ghPagesPath -Recurse -Force
+                Write-Success "Portfolio rebuilt and copied to gh-pages/!"
+            }
         }
     } else {
-        Write-Info "Skipping portfolio index.html registration for this game."
+        Write-Info "Skipping portfolio rebuild for this game."
     }
 }
 
 # 5. Git Status and Deployment Interaction
-Write-Header "Deployment & Git Status"
+Write-Header "Deployment and Git Status"
 $gitDir = Join-Path $PSScriptRoot "gh-pages"
 
 if (Test-Path (Join-Path $gitDir ".git")) {
