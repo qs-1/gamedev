@@ -78,7 +78,7 @@ export default function App() {
 
         {/* Game grid */}
         <main>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {games.map((game) => (
               <GameCard key={game.number} game={game} />
             ))}
