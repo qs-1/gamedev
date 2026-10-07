@@ -25,7 +25,7 @@ export const games: Game[] = [
     number: 10,
     title: "Minecraft Lite",
     description: "",
-    href: "minecraft/index.html",
+    href: "mine/index.html",
     tags: ["3D", "FPS"],
   },
   {
@@ -35,12 +35,4 @@ export const games: Game[] = [
     href: "cookie/index.html",
     tags: ["Idle", "Clicker"],
   }
-
-  {
-    number: 10,
-    title: "Minelite",
-    description: "Assignment 10 game.",
-    href: "mine/index.html",
-    tags: ["2D"],
-  },
 ];
