@@ -16,20 +16,12 @@ function GameCard({ game }: { game: (typeof games)[number] }) {
       rel="noopener noreferrer"
       className="group block focus:outline-none focus-visible:ring-1 focus-visible:ring-white rounded-xl"
     >
-      <Card className="h-full flex flex-col border-border bg-card transition-colors duration-150 group-hover:border-white/20 group-hover:bg-card/70">
-        <CardHeader className="pb-2">
-          <span className="font-mono text-xs text-muted-foreground">
-            {String(game.number).padStart(2, "0")}
-          </span>
+      <Card className="h-full flex flex-col border-border bg-card transition-colors duration-150 hover:border-white/20 hover:bg-card/70">
+        <CardHeader className="pb-4">
           <CardTitle className="text-sm font-medium text-foreground">
             {game.title}
           </CardTitle>
         </CardHeader>
-        <CardContent className="flex-1">
-          <CardDescription className="text-xs leading-relaxed text-muted-foreground">
-            {game.description}
-          </CardDescription>
-        </CardContent>
         <CardFooter className="pt-0">
           <div className="flex flex-wrap gap-1.5">
             {game.tags.map((tag) => (
