@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://7qau1ft8fbcf"]
+
+[ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://scenes/player.tscn" id="1_f3sb7"]
+[ext_resource type="MeshLibrary" uid="uid://dqymx8togyf2o" path="res://blocks.tres" id="4_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://cv6kswwdbeb6e" path="res://scenes/sky_3d.tscn" id="4_k0juu"]
+[ext_resource type="PackedScene" uid="uid://ca8b1kb14mtdl" path="res://scenes/water.tscn" id="13_jhx03"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o8fc1"]
+transparency = 1
+albedo_color = Color(0.3882353, 0.5058824, 0.69803923, 0.39607844)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xo05s"]
+material = SubResource("StandardMaterial3D_o8fc1")
+size = Vector2(5000, 5000)
+
+[node name="Node3D" type="Node3D" unique_id=679147111]
+
+[node name="player" parent="." unique_id=459040246 instance=ExtResource("1_f3sb7")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -9.276064, 12.641704, -10.587806)
+
+[node name="GridMap" type="GridMap" parent="." unique_id=1198664752]
+mesh_library = ExtResource("4_aqk2v")
+
+[node name="water" parent="." unique_id=627678120 instance=ExtResource("13_jhx03")]
+mesh = SubResource("PlaneMesh_xo05s")
+
+[node name="Sky3D" parent="." unique_id=1044553477 instance=ExtResource("4_k0juu")]
+current_time = 18.235595586078276
+minutes_per_day = 8.0
+wind_direction = 2.35619451204804

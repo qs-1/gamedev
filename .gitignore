@@ -1,0 +1,21 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+.import/
+
+
+# Imported translations
+*.translation
+
+# Mono-specific
+.mono/
+data_*/
+
+# web build dir
+web_build/
+
+# others
+github_pages_link
+
+# deployment worktree
+/gh-pages/

@@ -1,0 +1,163 @@
+[gd_scene format=3 uid="uid://ckudr8chj1kgo"]
+
+[ext_resource type="Script" uid="uid://b0gd8hrqpvtbb" path="res://player.gd" id="1_4flbx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3vyb7"]
+radius = 0.8
+height = 4.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g2els"]
+radius = 0.8
+height = 4.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_4flbx"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_3vyb7"]
+font_size = 20
+font_color = Color(0.8132577, 0.8132577, 0.81325763, 1)
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=459040246]
+process_mode = 3
+script = ExtResource("1_4flbx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2066904103]
+shape = SubResource("CapsuleShape3D_3vyb7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=409818477]
+mesh = SubResource("CapsuleMesh_g2els")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1587154814]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.709387, 0)
+light_energy = 0.5
+omni_range = 38.811077
+omni_attenuation = 0.14
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2105389615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86833, -0.53633606)
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=521368491]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+target_position = Vector3(0, -8, 0)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=238663825]
+
+[node name="cross" type="Label" parent="UI" unique_id=558525682]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "+"
+label_settings = SubResource("LabelSettings_4flbx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="tip" type="Label" parent="UI" unique_id=1257069114]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -295.0
+offset_top = 70.0
+offset_right = 295.0
+offset_bottom = 98.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Press 'C' to toggle mouse, 'E' to refill hunger, 'L' to toggle light"
+label_settings = SubResource("LabelSettings_4flbx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="blocks" type="RichTextLabel" parent="UI" unique_id=419687136]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -343.5
+offset_top = -119.0
+offset_right = 343.5
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseMenu" type="ColorRect" parent="UI" unique_id=571650185]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.57254905)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PauseMenu" unique_id=967644123]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -50.5
+offset_right = 23.0
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnSave" type="Button" parent="UI/PauseMenu/VBoxContainer" unique_id=815375638]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "Save"
+
+[node name="BtnLoad" type="Button" parent="UI/PauseMenu/VBoxContainer" unique_id=1266410613]
+layout_mode = 2
+text = "Load"
+
+[node name="BtnQuit" type="Button" parent="UI/PauseMenu/VBoxContainer" unique_id=1779083268]
+layout_mode = 2
+text = "Quit"
+
+[node name="tip" type="Label" parent="UI/PauseMenu" unique_id=1770619447]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = 110.0
+offset_right = 90.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "'C' to toggle cursor
+'E' to refill hunger
+'L' to toggle light"
+label_settings = SubResource("LabelSettings_3vyb7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BreakTimer" type="Timer" parent="." unique_id=599091979]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="pressed" from="UI/PauseMenu/VBoxContainer/BtnSave" to="." method="_on_btn_save_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/VBoxContainer/BtnLoad" to="." method="_on_btn_load_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/VBoxContainer/BtnQuit" to="." method="_on_btn_quit_pressed"]
+[connection signal="timeout" from="BreakTimer" to="." method="_on_break_timer_timeout"]
