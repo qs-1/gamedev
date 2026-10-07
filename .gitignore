@@ -19,3 +19,5 @@ github_pages_link
 
 # deployment worktree
 /gh-pages/
+.antigravitycli/
+.directory
