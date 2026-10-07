@@ -35,4 +35,12 @@ export const games: Game[] = [
     href: "cookie/index.html",
     tags: ["Idle", "Clicker"],
   }
+
+  {
+    number: 10,
+    title: "Minelite",
+    description: "Assignment 10 game.",
+    href: "mine/index.html",
+    tags: ["2D"],
+  },
 ];
