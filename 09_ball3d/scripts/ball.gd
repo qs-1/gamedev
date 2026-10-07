@@ -19,10 +19,10 @@ func _ready() -> void:
 	mouse_cap = true
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion and not win and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+	if event is InputEventMouseMotion and not win:
 		camera_rig.rotate_y(-event.relative.x * mouse_sensitivity)
 	if (event is InputEventMouseButton or event is InputEventKey) and event.pressed and not win:
-		if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
+		if not mouse_cap:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			mouse_cap = true
 	if event.is_action_pressed("ui_cancel"):

@@ -270,10 +270,6 @@ func pos_to_grid(p):
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
-		if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			return
-		
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			if raycast.is_colliding():
 				var hit_point = raycast.get_collision_point()
